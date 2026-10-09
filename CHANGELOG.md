@@ -2,6 +2,10 @@
 
 All releases are git tags `vX.Y.Z`. Course repos pin a semver range and upgrade with `studygraph upgrade`.
 
+## 1.0.1 — 2026-10-09
+
+- Release used to test `studygraph upgrade` end to end; no schema change.
+
 ## 1.0.0 — 2026-10-09
 
 First release of the TypeScript core.
