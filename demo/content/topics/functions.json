@@ -1,0 +1,669 @@
+{
+ "meta": {
+  "id": "functions",
+  "title": "Functions",
+  "course": "A",
+  "order": 2,
+  "sourceFiles": [
+   "intro-notes.pdf"
+  ],
+  "summary": "Functions as special sets of pairs, and the three properties that matter most: injective, surjective, bijective.",
+  "overview": "A function is defined inside set theory as a set of ordered pairs. We classify functions by how their arrows land and show that the classes are closed under composition. Bijections are the functions with inverses, which is what makes them the right tool for comparing sizes in the next topic.",
+  "keyQuestions": [
+   "What makes a relation a function?",
+   "How do you prove a function is injective?",
+   "Why do bijections have inverses?"
+  ],
+  "prerequisites": [
+   "sets"
+  ],
+  "alsoCovers": [],
+  "status": "checked"
+ },
+ "nodes": [
+  {
+   "id": "def.function",
+   "type": "definition",
+   "topic": "functions",
+   "title": "Function",
+   "terms": [
+    {
+     "term": "function",
+     "alt": "zobrazenie"
+    },
+    {
+     "term": "domain",
+     "alt": "definičný obor"
+    },
+    {
+     "term": "codomain",
+     "alt": "obor hodnôt"
+    }
+   ],
+   "aliases": [
+    "map",
+    "mapping"
+   ],
+   "tags": [],
+   "origin": "slides",
+   "statement": "A **function** $f : A \\to B$ is a subset $f \\subseteq A \\times B$ of the [Cartesian product](def.cartesian-product) such that for every $a \\in A$ there is exactly one $b \\in B$ with $(a,b) \\in f$. We write $f(a) = b$; $A$ is the domain and $B$ the codomain.",
+   "uses": [
+    "def.cartesian-product"
+   ],
+   "relations": [],
+   "figures": [
+    "fig.function-kinds"
+   ],
+   "difficulty": 1,
+   "importance": 3,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 9,
+     "label": "p. 9"
+    }
+   ],
+   "explanation": {
+    "intuition": "A machine that turns every input from $A$ into exactly one output in $B$.",
+    "detailed": "*Every* input has an output (totality) and *exactly one* (single-valuedness). The image $f[A] = \\{f(a) : a \\in A\\}$ may be smaller than the codomain.",
+    "pitfalls": "A rule like $x \\mapsto \\pm\\sqrt{x}$ is not a function: it gives two outputs.",
+    "examples": "$f : \\mathbb{N} \\to \\mathbb{N}$, $f(n) = n^2$; the identity $\\mathrm{id}_A(a) = a$."
+   }
+  },
+  {
+   "id": "def.injection",
+   "type": "definition",
+   "topic": "functions",
+   "title": "Injective function",
+   "terms": [
+    {
+     "term": "injection",
+     "alt": "injekcia"
+    },
+    {
+     "term": "one-to-one",
+     "alt": "prosté"
+    }
+   ],
+   "aliases": [
+    "one-to-one"
+   ],
+   "tags": [],
+   "origin": "slides",
+   "statement": "A [function](def.function) $f : A \\to B$ is **injective** when $f(a_1) = f(a_2)$ implies $a_1 = a_2$: different inputs give different outputs.",
+   "uses": [
+    "def.function"
+   ],
+   "relations": [],
+   "figures": [
+    "fig.function-kinds"
+   ],
+   "difficulty": 1,
+   "importance": 3,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 10,
+     "label": "p. 10"
+    }
+   ],
+   "explanation": {
+    "intuition": "No two arrows land on the same target.",
+    "detailed": "To prove injectivity, assume $f(a_1) = f(a_2)$ and derive $a_1 = a_2$. To disprove it, find two different inputs with equal outputs.",
+    "pitfalls": "Injectivity says nothing about whether every element of $B$ is hit.",
+    "examples": "$n \\mapsto 2n$ on $\\mathbb{Z}$ is injective; $n \\mapsto n^2$ on $\\mathbb{Z}$ is not, since $(-1)^2 = 1^2$."
+   }
+  },
+  {
+   "id": "def.surjection",
+   "type": "definition",
+   "topic": "functions",
+   "title": "Surjective function",
+   "terms": [
+    {
+     "term": "surjection",
+     "alt": "surjekcia"
+    },
+    {
+     "term": "onto",
+     "alt": "na"
+    }
+   ],
+   "aliases": [
+    "onto"
+   ],
+   "tags": [],
+   "origin": "slides",
+   "statement": "A [function](def.function) $f : A \\to B$ is **surjective** when every $b \\in B$ equals $f(a)$ for some $a \\in A$.",
+   "uses": [
+    "def.function"
+   ],
+   "relations": [],
+   "figures": [
+    "fig.function-kinds"
+   ],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 10,
+     "label": "p. 10"
+    }
+   ],
+   "explanation": {
+    "intuition": "Every target is hit by at least one arrow.",
+    "detailed": "Surjectivity depends on the codomain: $n \\mapsto 2n$ is surjective onto the even integers but not onto $\\mathbb{Z}$.",
+    "pitfalls": "",
+    "examples": "$x \\mapsto x^3$ on $\\mathbb{R}$ is surjective."
+   }
+  },
+  {
+   "id": "def.bijection",
+   "type": "definition",
+   "topic": "functions",
+   "title": "Bijection",
+   "terms": [
+    {
+     "term": "bijection",
+     "alt": "bijekcia"
+    }
+   ],
+   "aliases": [
+    "one-to-one correspondence"
+   ],
+   "tags": [],
+   "origin": "slides",
+   "statement": "A **bijection** is a function that is both [injective](def.injection) and [surjective](def.surjection).",
+   "uses": [
+    "def.injection",
+    "def.surjection"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 3,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 11,
+     "label": "p. 11"
+    }
+   ],
+   "explanation": {
+    "intuition": "A perfect pairing: every element of $A$ is matched with exactly one element of $B$ and nothing is left over.",
+    "detailed": "Bijections are exactly the functions that can be undone; see the inverse proposition.",
+    "pitfalls": "",
+    "examples": ""
+   }
+  },
+  {
+   "id": "def.composition",
+   "type": "definition",
+   "topic": "functions",
+   "title": "Composition",
+   "terms": [
+    {
+     "term": "composition",
+     "alt": "skladanie",
+     "symbol": "\\circ"
+    }
+   ],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "For [functions](def.function) $f : A \\to B$ and $g : B \\to C$, the **composition** $g \\circ f : A \\to C$ is $(g \\circ f)(a) = g(f(a))$.",
+   "uses": [
+    "def.function"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 12,
+     "label": "p. 12"
+    }
+   ],
+   "explanation": {
+    "intuition": "Run $f$ first, then feed its output to $g$.",
+    "detailed": "Read $g \\circ f$ right to left. Composition is associative but not commutative.",
+    "pitfalls": "",
+    "examples": ""
+   }
+  },
+  {
+   "id": "thm.composition-injective",
+   "type": "theorem",
+   "topic": "functions",
+   "title": "Composition of injections is injective",
+   "terms": [],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "If $f : A \\to B$ and $g : B \\to C$ are [injective](def.injection), then $g \\circ f$ is injective ([composition](def.composition)).",
+   "uses": [
+    "def.composition",
+    "def.injection"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 12,
+     "label": "p. 12"
+    }
+   ],
+   "proof": {
+    "origin": "slides",
+    "status": "full",
+    "idea": "Peel off $g$, then $f$.",
+    "steps": [
+     {
+      "text": "Suppose $g(f(a_1)) = g(f(a_2))$.",
+      "why": "This is the hypothesis in the definition of injectivity for $g \\circ f$.",
+      "uses": [
+       "def.injection",
+       "def.composition"
+      ]
+     },
+     {
+      "text": "Since $g$ is injective, $f(a_1) = f(a_2)$.",
+      "why": "Apply injectivity of $g$ to the inputs $f(a_1), f(a_2) \\in B$.",
+      "uses": [
+       "def.injection"
+      ]
+     },
+     {
+      "text": "Since $f$ is injective, $a_1 = a_2$.",
+      "why": "Apply injectivity of $f$.",
+      "uses": [
+       "def.injection"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "prop.inverse",
+   "type": "proposition",
+   "topic": "functions",
+   "title": "Bijections have inverses",
+   "terms": [],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "A function $f : A \\to B$ is a [bijection](def.bijection) iff there is $g : B \\to A$ with $g \\circ f = \\mathrm{id}_A$ and $f \\circ g = \\mathrm{id}_B$. Such $g$ is unique and written $f^{-1}$.",
+   "uses": [
+    "def.bijection",
+    "def.composition"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 2,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 13,
+     "label": "p. 13"
+    }
+   ],
+   "proof": {
+    "origin": "slides",
+    "status": "sketch",
+    "idea": "Define $g(b)$ as the unique $a$ with $f(a) = b$; surjectivity gives existence, injectivity uniqueness. Conversely, $g \\circ f = \\mathrm{id}$ forces injectivity and $f \\circ g = \\mathrm{id}$ forces surjectivity.",
+    "steps": []
+   }
+  },
+  {
+   "id": "cor.composition-bijective",
+   "type": "corollary",
+   "topic": "functions",
+   "title": "Composition of bijections is a bijection",
+   "terms": [],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "If $f : A \\to B$ and $g : B \\to C$ are [bijections](def.bijection), so is $g \\circ f$, by [the theorem on injections](thm.composition-injective) and its analogue for surjections.",
+   "uses": [
+    "thm.composition-injective",
+    "def.bijection",
+    "def.surjection"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 13,
+     "label": "p. 13"
+    }
+   ],
+   "proof": {
+    "origin": "generated",
+    "status": "full",
+    "steps": [
+     {
+      "text": "$g \\circ f$ is injective.",
+      "why": "Both $f$ and $g$ are injective.",
+      "uses": [
+       "thm.composition-injective"
+      ]
+     },
+     {
+      "text": "Given $c \\in C$, pick $b$ with $g(b) = c$, then $a$ with $f(a) = b$; so $(g \\circ f)(a) = c$ and $g \\circ f$ is surjective.",
+      "why": "Surjectivity of $g$, then of $f$.",
+      "uses": [
+       "def.surjection"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "alg.check-injective",
+   "type": "algorithm",
+   "topic": "functions",
+   "title": "Checking injectivity of a finite function",
+   "terms": [],
+   "aliases": [],
+   "tags": [],
+   "origin": "supplement",
+   "statement": "Given a finite [function](def.function) as a list of pairs $(a, f(a))$: keep a set of outputs seen so far; for each pair, if $f(a)$ is already in the set, report *not injective*; otherwise add it. If the list ends, $f$ is [injective](def.injection). With a hash set this takes $O(n)$ expected time.",
+   "uses": [
+    "def.injection",
+    "def.function"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "explanation": {
+    "intuition": "Injectivity fails exactly when some output repeats, so look for a repeat.",
+    "detailed": "Sorting the outputs and comparing neighbours gives an $O(n \\log n)$ alternative without hashing.",
+    "pitfalls": "",
+    "examples": ""
+   }
+  }
+ ],
+ "figures": [
+  {
+   "id": "fig.function-kinds",
+   "kind": "graph",
+   "title": "Reading arrows: function, injective, surjective",
+   "caption": "A function from $\\{a_1,a_2,a_3\\}$ to $\\{b_1,b_2,b_3\\}$. Step through to see why it is a function but neither injective nor surjective.",
+   "origin": "generated",
+   "illustrates": [
+    "def.function",
+    "def.injection",
+    "def.surjection"
+   ],
+   "sources": [],
+   "directed": true,
+   "vertices": [
+    {
+     "id": "a1",
+     "x": 80,
+     "y": 50,
+     "label": "$a_1$"
+    },
+    {
+     "id": "a2",
+     "x": 80,
+     "y": 130,
+     "label": "$a_2$"
+    },
+    {
+     "id": "a3",
+     "x": 80,
+     "y": 210,
+     "label": "$a_3$"
+    },
+    {
+     "id": "b1",
+     "x": 300,
+     "y": 50,
+     "label": "$b_1$"
+    },
+    {
+     "id": "b2",
+     "x": 300,
+     "y": 130,
+     "label": "$b_2$"
+    },
+    {
+     "id": "b3",
+     "x": 300,
+     "y": 210,
+     "label": "$b_3$"
+    }
+   ],
+   "edges": [
+    {
+     "id": "e1",
+     "source": "a1",
+     "target": "b1"
+    },
+    {
+     "id": "e2",
+     "source": "a2",
+     "target": "b2"
+    },
+    {
+     "id": "e3",
+     "source": "a3",
+     "target": "b2"
+    }
+   ],
+   "animations": [
+    {
+     "steps": [
+      {
+       "highlight": [
+        "a1",
+        "a2",
+        "a3",
+        "e1",
+        "e2",
+        "e3"
+       ],
+       "caption": "Every input has exactly one arrow leaving it, so this is a function."
+      },
+      {
+       "highlight": [
+        "a2",
+        "a3",
+        "e2",
+        "e3",
+        "b2"
+       ],
+       "caption": "$a_2 \\neq a_3$ but both map to $b_2$: not injective.",
+       "edgeLabels": {
+        "e2": "f(a₂)",
+        "e3": "f(a₃)"
+       }
+      },
+      {
+       "highlight": [
+        "b3"
+       ],
+       "caption": "No arrow reaches $b_3$: not surjective."
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "applications": [
+  {
+   "id": "app.database-keys",
+   "title": "Primary keys in a database",
+   "summary": "A primary key is an injective function from rows to key values.",
+   "scenario": "A table of students needs a column that identifies each row, so that updates and joins hit exactly one student.",
+   "modelling": "Model the table as a set of rows $R$ and the key column as a function $k : R \\to V$ into key values. The requirement 'identifies each row' is exactly injectivity of $k$.",
+   "solution": "The database enforces a uniqueness constraint, which is the injectivity check run on every insert. Names fail as keys because two students can share one; student numbers work because the university assigns them injectively.",
+   "connects": [
+    "def.injection",
+    "def.function"
+   ],
+   "figures": [],
+   "tags": [
+    "databases"
+   ],
+   "origin": "generated"
+  },
+  {
+   "id": "app.hash-collisions",
+   "title": "Why hash collisions cannot be avoided",
+   "summary": "A hash function from long strings to 64-bit values cannot be injective.",
+   "scenario": "A hash table stores user names under a 64-bit hash. Can a clever hash function guarantee no two names collide?",
+   "modelling": "A hash is a function $h : S \\to \\{0,1\\}^{64}$. No collisions means $h$ is injective. But $S$ (all strings) is infinite and the codomain has $2^{64}$ elements.",
+   "solution": "No function from a larger finite set, let alone an infinite one, into a smaller set is injective, so collisions must exist. Hash tables therefore handle collisions instead of trying to avoid them.",
+   "connects": [
+    "def.injection",
+    "alg.check-injective"
+   ],
+   "figures": [],
+   "tags": [
+    "algorithms"
+   ],
+   "origin": "generated"
+  }
+ ],
+ "quiz": [
+  {
+   "id": "quiz.fn-1",
+   "kind": "mcq",
+   "prompt": "$f : \\mathbb{Z} \\to \\mathbb{Z}$, $f(n) = 2n$ is…",
+   "options": [
+    "injective but not surjective",
+    "surjective but not injective",
+    "a bijection",
+    "neither"
+   ],
+   "answer": 0,
+   "explanation": "$2n_1 = 2n_2$ gives $n_1 = n_2$, but $1$ is never hit.",
+   "about": [
+    "def.injection",
+    "def.surjection"
+   ],
+   "difficulty": 1
+  },
+  {
+   "id": "quiz.fn-2",
+   "kind": "truefalse",
+   "prompt": "The composition of two surjections is a surjection.",
+   "answer": true,
+   "explanation": "Pull a target back through $g$, then through $f$.",
+   "about": [
+    "cor.composition-bijective",
+    "def.surjection"
+   ],
+   "difficulty": 1
+  },
+  {
+   "id": "quiz.fn-3",
+   "kind": "mcq",
+   "prompt": "A function $f : \\{1,2,3\\} \\to \\{1,2\\}$ can be…",
+   "options": [
+    "injective",
+    "surjective",
+    "bijective",
+    "none of these"
+   ],
+   "answer": 1,
+   "explanation": "Three inputs cannot land on two outputs without a repeat, but both outputs can be hit.",
+   "about": [
+    "def.injection",
+    "def.surjection"
+   ],
+   "difficulty": 2
+  },
+  {
+   "id": "quiz.fn-4",
+   "kind": "flashcard",
+   "prompt": "Define an injective function.",
+   "answer": "$f : A \\to B$ is injective if $f(a_1) = f(a_2)$ implies $a_1 = a_2$.",
+   "explanation": "",
+   "about": [
+    "def.injection"
+   ],
+   "difficulty": 1
+  },
+  {
+   "id": "quiz.fn-5",
+   "kind": "open",
+   "prompt": "Show that $g \\circ f$ injective implies $f$ injective.",
+   "answer": "If $f(a_1) = f(a_2)$ then $g(f(a_1)) = g(f(a_2))$, so $a_1 = a_2$ by injectivity of $g \\circ f$.",
+   "explanation": "",
+   "about": [
+    "def.composition",
+    "def.injection"
+   ],
+   "difficulty": 2
+  }
+ ],
+ "schemaVersion": 1
+}

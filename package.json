@@ -1,0 +1,43 @@
+{
+  "name": "studygraph",
+  "version": "1.0.0",
+  "description": "Core of Studygraph: schema, engine, CLI and study app for interlinked knowledge-graph courses",
+  "type": "module",
+  "license": "UNLICENSED",
+  "bin": {
+    "studygraph": "bin/studygraph.js"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "bin",
+    "lib",
+    "app-template",
+    "template",
+    "migrations",
+    "CHANGELOG.md",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/build-app.mjs",
+    "prepare": "npm run build",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.app.json --noEmit",
+    "test": "node --test test/*.test.mjs",
+    "demo": "node bin/studygraph.js build demo --viewer --out dist-demo",
+    "smoke": "python3 test/smoke.py"
+  },
+  "dependencies": {
+    "zod": "3.23.8",
+    "katex": "0.16.9"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3",
+    "esbuild": "0.24.0",
+    "@types/node": "22.7.5",
+    "marked": "4.3.0",
+    "cytoscape": "3.30.2"
+  }
+}

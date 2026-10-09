@@ -1,0 +1,23 @@
+name: Upgrade the studygraph core
+on:
+  schedule: [{ cron: "0 6 * * 1" }]
+  workflow_dispatch:
+permissions: { contents: write, pull-requests: write }
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    env: { STUDYGRAPH_TOKEN: "${{ secrets.STUDYGRAPH_TOKEN }}" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: git config --global url."https://x-access-token:${{ secrets.STUDYGRAPH_TOKEN }}@github.com/".insteadOf "https://github.com/"
+        if: env.STUDYGRAPH_TOKEN != ''
+      - run: npm install --no-audit --no-fund
+      - run: npx studygraph upgrade
+      - uses: peter-evans/create-pull-request@v6
+        with:
+          branch: studygraph-upgrade
+          title: Upgrade studygraph core
+          body: Automated upgrade by `studygraph upgrade` (pinned core moved to the newest release, content migrated if needed, build checked).
+          commit-message: Upgrade studygraph core

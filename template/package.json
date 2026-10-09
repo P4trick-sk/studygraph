@@ -1,0 +1,19 @@
+{
+  "name": "{{SLUG}}",
+  "private": true,
+  "description": "{{TITLE}} – a Studygraph course",
+  "type": "module",
+  "scripts": {
+    "validate": "studygraph validate",
+    "build": "studygraph build",
+    "build:single": "studygraph build --single",
+    "serve": "studygraph build && studygraph serve",
+    "links": "studygraph links",
+    "cycles": "studygraph cycles --apply",
+    "upgrade": "studygraph upgrade",
+    "upgrade:check": "studygraph upgrade --check"
+  },
+  "devDependencies": {
+    "studygraph": "{{CORE}}"
+  }
+}

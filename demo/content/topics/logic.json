@@ -1,0 +1,475 @@
+{
+ "meta": {
+  "id": "logic",
+  "title": "Propositional logic",
+  "course": "B",
+  "order": 4,
+  "sourceFiles": [
+   "intro-notes.pdf"
+  ],
+  "summary": "Propositions, connectives, tautologies and equivalence: the logic that the set-theoretic proofs quietly rely on.",
+  "overview": "Propositional logic studies how the truth of compound statements depends on their parts. Truth tables give a complete, mechanical semantics, and logical equivalence lets us rewrite formulas. De Morgan's laws reappear here as the source of the set version.",
+  "keyQuestions": [
+   "When is a formula a tautology?",
+   "Why is $p \\to q$ true when $p$ is false?",
+   "How are the set and logic versions of De Morgan's laws related?"
+  ],
+  "prerequisites": [],
+  "alsoCovers": [],
+  "status": "reviewing"
+ },
+ "nodes": [
+  {
+   "id": "def.proposition",
+   "type": "definition",
+   "topic": "logic",
+   "title": "Proposition",
+   "terms": [
+    {
+     "term": "proposition",
+     "alt": "výrok"
+    }
+   ],
+   "aliases": [
+    "statement"
+   ],
+   "tags": [],
+   "origin": "slides",
+   "statement": "A **proposition** is a statement that is either true or false. Propositional variables $p, q, r, \\dots$ stand for propositions whose truth value is not fixed.",
+   "uses": [],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 21,
+     "label": "p. 21"
+    }
+   ],
+   "explanation": {
+    "intuition": "Something you could answer with yes or no.",
+    "detailed": "'$2 + 2 = 4$' is a proposition; 'Is it raining?' and '$x > 3$' (with $x$ unknown) are not.",
+    "pitfalls": "",
+    "examples": ""
+   }
+  },
+  {
+   "id": "def.connectives",
+   "type": "definition",
+   "topic": "logic",
+   "title": "Logical connectives",
+   "terms": [
+    {
+     "term": "connective",
+     "alt": "logická spojka"
+    },
+    {
+     "term": "conjunction",
+     "alt": "konjunkcia",
+     "symbol": "\\land"
+    },
+    {
+     "term": "disjunction",
+     "alt": "disjunkcia",
+     "symbol": "\\lor"
+    },
+    {
+     "term": "implication",
+     "alt": "implikácia",
+     "symbol": "\\to"
+    },
+    {
+     "term": "negation",
+     "alt": "negácia",
+     "symbol": "\\neg"
+    }
+   ],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "From [propositions](def.proposition) $p, q$ we form $\\neg p$ (not), $p \\land q$ (and), $p \\lor q$ (or), $p \\to q$ (implies) and $p \\leftrightarrow q$ (iff). Their truth values are given by truth tables; $p \\to q$ is false only when $p$ is true and $q$ is false.",
+   "uses": [
+    "def.proposition"
+   ],
+   "relations": [],
+   "figures": [
+    "fig.connectives-table"
+   ],
+   "difficulty": 1,
+   "importance": 3,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 22,
+     "label": "p. 22"
+    }
+   ],
+   "explanation": {
+    "intuition": "Connectives are the operations of logic, the way $+$ and $\\cdot$ are the operations of arithmetic.",
+    "detailed": "Each connective is a function from truth values to truth values, so a formula with $n$ variables is described by a table with $2^n$ rows.",
+    "pitfalls": "$p \\to q$ is true whenever $p$ is false. 'If the moon is cheese, then $1 = 2$' is a true implication.",
+    "examples": ""
+   }
+  },
+  {
+   "id": "def.tautology",
+   "type": "definition",
+   "topic": "logic",
+   "title": "Tautology",
+   "terms": [
+    {
+     "term": "tautology",
+     "alt": "tautológia"
+    }
+   ],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "A formula built with [connectives](def.connectives) is a **tautology** if it is true under every assignment of truth values to its variables.",
+   "uses": [
+    "def.connectives"
+   ],
+   "relations": [
+    {
+     "type": "see-also",
+     "target": "thm.compactness"
+    }
+   ],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 23,
+     "label": "p. 23"
+    }
+   ],
+   "explanation": {
+    "intuition": "A formula that is true for reasons of form alone, whatever the variables mean.",
+    "detailed": "Truth tables decide tautologies mechanically, but the table doubles with each variable. For infinite sets of formulas, the [compactness theorem](thm.compactness) of the next part reduces questions to finite ones.",
+    "pitfalls": "",
+    "examples": ""
+   }
+  },
+  {
+   "id": "def.equivalence",
+   "type": "definition",
+   "topic": "logic",
+   "title": "Logical equivalence",
+   "terms": [
+    {
+     "term": "logical equivalence",
+     "alt": "logická ekvivalencia",
+     "symbol": "\\equiv"
+    }
+   ],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "Formulas $\\varphi$ and $\\psi$ are **logically equivalent**, $\\varphi \\equiv \\psi$, when $\\varphi \\leftrightarrow \\psi$ is a [tautology](def.tautology): they have the same truth value under every assignment.",
+   "uses": [
+    "def.tautology"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 23,
+     "label": "p. 23"
+    }
+   ],
+   "explanation": {
+    "intuition": "Two formulas that always agree, so either can replace the other.",
+    "detailed": "$\\equiv$ is a statement *about* formulas, while $\\leftrightarrow$ is a connective *inside* a formula.",
+    "pitfalls": "",
+    "examples": ""
+   }
+  },
+  {
+   "id": "thm.de-morgan-logic",
+   "type": "theorem",
+   "topic": "logic",
+   "title": "De Morgan's laws for propositions",
+   "terms": [
+    {
+     "term": "De Morgan's laws",
+     "alt": "De Morganove zákony"
+    }
+   ],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "$\\neg(p \\lor q) \\equiv \\neg p \\land \\neg q$ and $\\neg(p \\land q) \\equiv \\neg p \\lor \\neg q$ ([logical equivalence](def.equivalence)).",
+   "uses": [
+    "def.equivalence",
+    "def.connectives"
+   ],
+   "relations": [
+    {
+     "type": "analogue",
+     "target": "thm.de-morgan"
+    }
+   ],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 3,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 24,
+     "label": "p. 24"
+    }
+   ],
+   "proof": {
+    "origin": "slides",
+    "status": "full",
+    "idea": "Compare the truth tables row by row.",
+    "steps": [
+     {
+      "text": "There are $2^2 = 4$ assignments to $p, q$.",
+      "why": "Each variable is true or false.",
+      "uses": [
+       "def.connectives"
+      ]
+     },
+     {
+      "text": "In each row, $\\neg(p \\lor q)$ is true only when $p$ and $q$ are both false, and so is $\\neg p \\land \\neg q$.",
+      "why": "Read off the tables for $\\lor$, $\\land$ and $\\neg$.",
+      "uses": [
+       "def.connectives"
+      ]
+     },
+     {
+      "text": "So the two formulas agree in every row, which is the definition of $\\equiv$. The second law is checked the same way.",
+      "why": "Definition of logical equivalence.",
+      "uses": [
+       "def.equivalence"
+      ]
+     }
+    ]
+   },
+   "attribution": "De Morgan"
+  },
+  {
+   "id": "ex.excluded-middle",
+   "type": "example",
+   "topic": "logic",
+   "title": "Excluded middle",
+   "terms": [],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "$p \\lor \\neg p$ is a [tautology](def.tautology): if $p$ is true the left disjunct holds, otherwise the right one does.",
+   "uses": [
+    "def.tautology"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "draft",
+    "notes": [
+     "Lecturer question: should the course mention that intuitionistic logic rejects this?"
+    ]
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 23,
+     "label": "p. 23"
+    }
+   ]
+  }
+ ],
+ "figures": [
+  {
+   "id": "fig.connectives-table",
+   "kind": "table",
+   "title": "Truth tables of the binary connectives",
+   "caption": "1 is true, 0 is false.",
+   "origin": "slides",
+   "illustrates": [
+    "def.connectives"
+   ],
+   "sources": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 22,
+     "label": "p. 22"
+    }
+   ],
+   "columns": [
+    "$p$",
+    "$q$",
+    "$p \\land q$",
+    "$p \\lor q$",
+    "$p \\to q$",
+    "$p \\leftrightarrow q$"
+   ],
+   "rows": [
+    [
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1"
+    ],
+    [
+     "1",
+     "0",
+     "0",
+     "1",
+     "0",
+     "0"
+    ],
+    [
+     "0",
+     "1",
+     "0",
+     "1",
+     "1",
+     "0"
+    ],
+    [
+     "0",
+     "0",
+     "0",
+     "0",
+     "1",
+     "1"
+    ]
+   ]
+  }
+ ],
+ "applications": [
+  {
+   "id": "app.circuit-simplification",
+   "title": "Simplifying a logic circuit",
+   "summary": "De Morgan's laws let a NAND-only chip implement OR.",
+   "scenario": "A board has only NAND gates in stock, but the design needs an OR gate.",
+   "modelling": "A NAND gate computes $\\neg(p \\land q)$. We want $p \\lor q$.",
+   "solution": "By De Morgan, $p \\lor q \\equiv \\neg(\\neg p \\land \\neg q)$, which is NAND applied to $\\neg p$ and $\\neg q$; and $\\neg p$ is NAND of $p$ with itself. Three NAND gates make an OR.",
+   "connects": [
+    "thm.de-morgan-logic",
+    "def.connectives"
+   ],
+   "figures": [],
+   "tags": [
+    "hardware"
+   ],
+   "origin": "generated"
+  }
+ ],
+ "quiz": [
+  {
+   "id": "quiz.logic-1",
+   "kind": "mcq",
+   "prompt": "Which formula is a tautology?",
+   "options": [
+    "$p \\to p$",
+    "$p \\land \\neg p$",
+    "$p \\to q$",
+    "$p \\lor q$"
+   ],
+   "answer": 0,
+   "explanation": "$p \\to p$ is true in both rows; $p \\land \\neg p$ is never true.",
+   "about": [
+    "def.tautology"
+   ],
+   "difficulty": 1
+  },
+  {
+   "id": "quiz.logic-2",
+   "kind": "truefalse",
+   "prompt": "$\\neg(p \\land q) \\equiv \\neg p \\land \\neg q$.",
+   "answer": false,
+   "explanation": "The correct law is $\\neg(p \\land q) \\equiv \\neg p \\lor \\neg q$; try $p$ true, $q$ false.",
+   "about": [
+    "thm.de-morgan-logic"
+   ],
+   "difficulty": 1
+  },
+  {
+   "id": "quiz.logic-3",
+   "kind": "mcq",
+   "prompt": "How many rows does a truth table with 3 variables have?",
+   "options": [
+    "3",
+    "6",
+    "8",
+    "9"
+   ],
+   "answer": 2,
+   "explanation": "$2^3 = 8$ assignments.",
+   "about": [
+    "def.connectives"
+   ],
+   "difficulty": 1,
+   "check": {
+    "verifier": "expr",
+    "expr": "2**3"
+   }
+  },
+  {
+   "id": "quiz.logic-4",
+   "kind": "flashcard",
+   "prompt": "When is $p \\to q$ false?",
+   "answer": "Only when $p$ is true and $q$ is false.",
+   "explanation": "",
+   "about": [
+    "def.connectives"
+   ],
+   "difficulty": 1
+  },
+  {
+   "id": "quiz.logic-5",
+   "kind": "truefalse",
+   "prompt": "$p \\lor \\neg p$ is a tautology.",
+   "answer": true,
+   "explanation": "Excluded middle.",
+   "about": [
+    "ex.excluded-middle"
+   ],
+   "difficulty": 1
+  }
+ ],
+ "schemaVersion": 1
+}

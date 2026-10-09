@@ -1,0 +1,754 @@
+{
+ "meta": {
+  "id": "cardinality",
+  "title": "Cardinality",
+  "course": "A",
+  "order": 3,
+  "sourceFiles": [
+   "intro-notes.pdf"
+  ],
+  "summary": "Comparing sizes of sets without counting: bijections, countable sets and Cantor's diagonal argument.",
+  "overview": "Two sets are the same size when a bijection pairs them. With that one definition, the integers and rationals turn out to be as large as the naturals, while the power set of the naturals is strictly larger. Cantor–Schröder–Bernstein makes the comparison of sizes behave like an order.",
+  "keyQuestions": [
+   "What does it mean for two infinite sets to have the same size?",
+   "Why is $\\mathbb{Z}$ countable?",
+   "How does the diagonal argument show $|A| < |\\mathcal{P}(A)|$?"
+  ],
+  "prerequisites": [
+   "functions"
+  ],
+  "alsoCovers": [],
+  "status": "reviewing"
+ },
+ "nodes": [
+  {
+   "id": "def.equinumerous",
+   "type": "definition",
+   "topic": "cardinality",
+   "title": "Equinumerous sets",
+   "terms": [
+    {
+     "term": "equinumerous",
+     "alt": "rovnako mohutné"
+    },
+    {
+     "term": "cardinality",
+     "alt": "mohutnosť"
+    }
+   ],
+   "aliases": [
+    "same size"
+   ],
+   "tags": [],
+   "origin": "slides",
+   "statement": "Sets $A$ and $B$ are **equinumerous**, written $|A| = |B|$, when there is a [bijection](def.bijection) $A \\to B$. We write $|A| \\le |B|$ when there is an [injection](def.injection) $A \\to B$.",
+   "uses": [
+    "def.bijection",
+    "def.injection"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 3,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 15,
+     "label": "p. 15"
+    }
+   ],
+   "explanation": {
+    "intuition": "Two sets have the same size if you can pair them off perfectly, even when you cannot count them.",
+    "detailed": "This is reflexive, symmetric (inverse of a bijection) and transitive (composition), so it behaves like equality of sizes.",
+    "pitfalls": "For infinite sets a proper subset can have the same size: $\\mathbb{N}$ and the even numbers are equinumerous.",
+    "examples": "$n \\mapsto 2n$ shows $|\\mathbb{N}| = |\\{0,2,4,\\dots\\}|$."
+   }
+  },
+  {
+   "id": "def.countable",
+   "type": "definition",
+   "topic": "cardinality",
+   "title": "Countable set",
+   "terms": [
+    {
+     "term": "countable",
+     "alt": "spočítateľná"
+    },
+    {
+     "term": "uncountable",
+     "alt": "nespočítateľná"
+    }
+   ],
+   "aliases": [
+    "denumerable"
+   ],
+   "tags": [],
+   "origin": "slides",
+   "statement": "A set is **countable** if it is finite or [equinumerous](def.equinumerous) with $\\mathbb{N}$. Otherwise it is **uncountable**.",
+   "uses": [
+    "def.equinumerous"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 3,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 16,
+     "label": "p. 16"
+    }
+   ],
+   "explanation": {
+    "intuition": "Countable means you can list the elements one after another, even if the list never ends.",
+    "detailed": "Equivalently, $A$ is countable iff there is an injection $A \\to \\mathbb{N}$ (or $A$ is empty, or there is a surjection $\\mathbb{N} \\to A$).",
+    "pitfalls": "",
+    "examples": ""
+   }
+  },
+  {
+   "id": "lem.subset-countable",
+   "type": "lemma",
+   "topic": "cardinality",
+   "title": "Subsets of countable sets are countable",
+   "terms": [],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "Every [subset](def.subset) of a [countable](def.countable) set is countable.",
+   "uses": [
+    "def.countable",
+    "def.subset",
+    "def.injection"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 16,
+     "label": "p. 16"
+    }
+   ],
+   "proof": {
+    "origin": "slides",
+    "status": "full",
+    "steps": [
+     {
+      "text": "Let $B \\subseteq A$ with an [injection](def.injection) $f : A \\to \\mathbb{N}$.",
+      "why": "Countability of $A$ in its injection form.",
+      "uses": [
+       "def.countable"
+      ]
+     },
+     {
+      "text": "The restriction $f|_B : B \\to \\mathbb{N}$ is still injective, so $B$ is countable.",
+      "why": "Distinct elements of $B$ are distinct elements of $A$.",
+      "uses": [
+       "def.injection",
+       "def.subset"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "ex.integers-countable",
+   "type": "example",
+   "topic": "cardinality",
+   "title": "The integers are countable",
+   "terms": [],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "$\\mathbb{Z}$ is [countable](def.countable): $g(n) = n/2$ for even $n$ and $g(n) = -(n+1)/2$ for odd $n$ is a bijection $\\mathbb{N} \\to \\mathbb{Z}$ listing $0, -1, 1, -2, 2, \\dots$",
+   "uses": [
+    "def.countable"
+   ],
+   "relations": [],
+   "figures": [
+    "fig.zigzag"
+   ],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 17,
+     "label": "p. 17"
+    }
+   ],
+   "explanation": {
+    "intuition": "Alternate between the non-negative and negative integers, and every integer gets a place in the list.",
+    "detailed": "Injective: even and odd inputs land in disjoint halves, and each half is a linear map. Surjective: $m \\ge 0$ is $g(2m)$ and $m < 0$ is $g(-2m-1)$.",
+    "pitfalls": "",
+    "examples": ""
+   }
+  },
+  {
+   "id": "thm.cantor",
+   "type": "theorem",
+   "topic": "cardinality",
+   "title": "Cantor's theorem",
+   "terms": [
+    {
+     "term": "Cantor's theorem",
+     "alt": "Cantorova veta"
+    }
+   ],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "For every set $A$ there is no [surjection](def.surjection) $A \\to \\mathcal{P}(A)$. In particular $|A| < |\\mathcal{P}(A)|$ in the sense of [equinumerosity](def.equinumerous), using the [power set](def.power-set).",
+   "uses": [
+    "def.power-set",
+    "def.surjection",
+    "def.equinumerous"
+   ],
+   "relations": [
+    {
+     "type": "analogue",
+     "target": "rem.russell",
+     "note": "the same diagonal trick"
+    }
+   ],
+   "figures": [
+    "fig.growth"
+   ],
+   "difficulty": 2,
+   "importance": 3,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 18,
+     "label": "p. 18"
+    }
+   ],
+   "explanation": {
+    "intuition": "However you assign subsets to elements, you can build a subset that disagrees with every assignment.",
+    "detailed": "This is the **diagonal argument**. It shows there is no largest set: $\\mathbb{N}$, $\\mathcal{P}(\\mathbb{N})$, $\\mathcal{P}(\\mathcal{P}(\\mathbb{N}))$, … are strictly increasing in size.",
+    "pitfalls": "$|A| < |\\mathcal{P}(A)|$ needs both halves: an injection $a \\mapsto \\{a\\}$ exists, and no bijection does.",
+    "examples": "For $A = \\{1,2,3\\}$ the gap is $3 < 8$."
+   },
+   "proof": {
+    "origin": "slides",
+    "status": "full",
+    "idea": "Build the subset $D$ of elements that are not in their own image.",
+    "strategy": "Proof by contradiction via a diagonal set.",
+    "steps": [
+     {
+      "text": "Let $f : A \\to \\mathcal{P}(A)$ be any function.",
+      "why": "We show $f$ misses some subset, so no function at all can be surjective.",
+      "uses": []
+     },
+     {
+      "text": "Define $D = \\{a \\in A : a \\notin f(a)\\}$, an element of $\\mathcal{P}(A)$.",
+      "why": "Diagonal set: for each $a$ it disagrees with $f(a)$ about the element $a$.",
+      "uses": [
+       "def.power-set"
+      ]
+     },
+     {
+      "text": "If $D = f(d)$ for some $d \\in A$, then $d \\in D \\iff d \\notin f(d) = D$, a contradiction.",
+      "why": "Apply the defining condition of $D$ to $d$ itself.",
+      "uses": []
+     },
+     {
+      "text": "So $D$ is not in the image of $f$, and $f$ is not surjective. The map $a \\mapsto \\{a\\}$ is injective, so $|A| \\le |\\mathcal{P}(A)|$ and the inequality is strict.",
+      "why": "Definition of surjection and of $\\le$ between sizes.",
+      "uses": [
+       "def.surjection",
+       "def.equinumerous"
+      ]
+     }
+    ]
+   },
+   "attribution": "Cantor"
+  },
+  {
+   "id": "cor.pn-uncountable",
+   "type": "corollary",
+   "topic": "cardinality",
+   "title": "$\\mathcal{P}(\\mathbb{N})$ is uncountable",
+   "terms": [],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "The set of all subsets of $\\mathbb{N}$ is not [countable](def.countable), by [Cantor's theorem](thm.cantor).",
+   "uses": [
+    "thm.cantor",
+    "def.countable"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 18,
+     "label": "p. 18"
+    }
+   ],
+   "proof": {
+    "origin": "slides",
+    "status": "full",
+    "steps": [
+     {
+      "text": "$\\mathcal{P}(\\mathbb{N})$ is infinite, so countable would mean a bijection $\\mathbb{N} \\to \\mathcal{P}(\\mathbb{N})$.",
+      "why": "Definition of countable.",
+      "uses": [
+       "def.countable"
+      ]
+     },
+     {
+      "text": "A bijection is a surjection, which Cantor's theorem rules out.",
+      "why": "Apply Cantor's theorem with $A = \\mathbb{N}$.",
+      "uses": [
+       "thm.cantor"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "thm.cantor-bernstein",
+   "type": "theorem",
+   "topic": "cardinality",
+   "title": "Cantor–Schröder–Bernstein theorem",
+   "terms": [],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "If there are [injections](def.injection) $A \\to B$ and $B \\to A$, then there is a [bijection](def.bijection) $A \\to B$. So $|A| \\le |B|$ and $|B| \\le |A|$ give $|A| = |B|$ ([equinumerous](def.equinumerous)).",
+   "uses": [
+    "def.injection",
+    "def.bijection",
+    "def.equinumerous"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 3,
+   "importance": 2,
+   "review": {
+    "status": "draft",
+    "notes": [
+     "The slide cites the proof from the textbook; only a sketch is given here.",
+     "Check whether the lecture uses the name 'Cantor–Bernstein' or the full one."
+    ]
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 19,
+     "label": "p. 19"
+    }
+   ],
+   "proof": {
+    "origin": "supplement",
+    "status": "sketch",
+    "idea": "Follow chains $a \\mapsto f(a) \\mapsto g(f(a)) \\mapsto \\dots$ backwards; on each chain use $f$ or $g^{-1}$ depending on where the chain starts.",
+    "steps": []
+   },
+   "attribution": "Cantor, Schröder, Bernstein"
+  },
+  {
+   "id": "prob.rationals-countable",
+   "type": "problem",
+   "topic": "cardinality",
+   "title": "The rationals are countable",
+   "terms": [],
+   "aliases": [],
+   "tags": [],
+   "origin": "supplement",
+   "statement": "Show that $\\mathbb{Q}$ is [countable](def.countable). Hint: inject $\\mathbb{Q}$ into $\\mathbb{Z} \\times \\mathbb{N}$ ([Cartesian product](def.cartesian-product)) and use that a [subset of a countable set is countable](lem.subset-countable).",
+   "uses": [
+    "def.countable",
+    "lem.subset-countable",
+    "def.cartesian-product"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 2,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "explanation": {
+    "intuition": "Every fraction is a pair of integers, and pairs of naturals can be listed diagonal by diagonal.",
+    "detailed": "Write $q = p/n$ in lowest terms with $n > 0$; $q \\mapsto (p, n)$ is injective. $\\mathbb{Z} \\times \\mathbb{N}$ is countable via $(p,n) \\mapsto 2^{g^{-1}(p)} 3^n$.",
+    "pitfalls": "",
+    "examples": ""
+   }
+  }
+ ],
+ "figures": [
+  {
+   "id": "fig.zigzag",
+   "kind": "graph",
+   "title": "Listing $\\mathbb{Z}$ with $\\mathbb{N}$",
+   "caption": "The bijection $g : \\mathbb{N} \\to \\mathbb{Z}$ visits $0, -1, 1, -2, 2$. Step through the list.",
+   "origin": "generated",
+   "illustrates": [
+    "ex.integers-countable"
+   ],
+   "sources": [],
+   "directed": true,
+   "vertices": [
+    {
+     "id": "n0",
+     "x": 50,
+     "y": 50,
+     "label": "0"
+    },
+    {
+     "id": "n1",
+     "x": 130,
+     "y": 50,
+     "label": "1"
+    },
+    {
+     "id": "n2",
+     "x": 210,
+     "y": 50,
+     "label": "2"
+    },
+    {
+     "id": "n3",
+     "x": 290,
+     "y": 50,
+     "label": "3"
+    },
+    {
+     "id": "n4",
+     "x": 370,
+     "y": 50,
+     "label": "4"
+    },
+    {
+     "id": "zm2",
+     "x": 50,
+     "y": 190,
+     "label": "−2"
+    },
+    {
+     "id": "zm1",
+     "x": 130,
+     "y": 190,
+     "label": "−1"
+    },
+    {
+     "id": "z0",
+     "x": 210,
+     "y": 190,
+     "label": "0"
+    },
+    {
+     "id": "z1",
+     "x": 290,
+     "y": 190,
+     "label": "1"
+    },
+    {
+     "id": "z2",
+     "x": 370,
+     "y": 190,
+     "label": "2"
+    }
+   ],
+   "edges": [
+    {
+     "id": "g0",
+     "source": "n0",
+     "target": "z0"
+    },
+    {
+     "id": "g1",
+     "source": "n1",
+     "target": "zm1"
+    },
+    {
+     "id": "g2",
+     "source": "n2",
+     "target": "z1"
+    },
+    {
+     "id": "g3",
+     "source": "n3",
+     "target": "zm2"
+    },
+    {
+     "id": "g4",
+     "source": "n4",
+     "target": "z2"
+    }
+   ],
+   "animations": [
+    {
+     "steps": [
+      {
+       "highlight": [
+        "n0",
+        "g0",
+        "z0"
+       ],
+       "caption": "$g(0) = 0$."
+      },
+      {
+       "highlight": [
+        "n1",
+        "g1",
+        "zm1"
+       ],
+       "caption": "$g(1) = -1$: odd inputs go negative.",
+       "edgeLabels": {
+        "g1": "odd"
+       }
+      },
+      {
+       "highlight": [
+        "n2",
+        "g2",
+        "z1"
+       ],
+       "caption": "$g(2) = 1$: even inputs go non-negative.",
+       "edgeLabels": {
+        "g2": "even"
+       }
+      },
+      {
+       "highlight": [
+        "n3",
+        "g3",
+        "zm2",
+        "n1",
+        "g1",
+        "zm1"
+       ],
+       "caption": "$g(3) = -2$, continuing the negatives."
+      },
+      {
+       "highlight": [
+        "n0",
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "g0",
+        "g1",
+        "g2",
+        "g3",
+        "g4",
+        "z0",
+        "zm1",
+        "z1",
+        "zm2",
+        "z2"
+       ],
+       "caption": "Every integer appears exactly once: a bijection."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fig.growth",
+   "kind": "plot",
+   "title": "$n$ against $2^n$",
+   "caption": "For finite sets, $|A| = n$ and $|\\mathcal{P}(A)| = 2^n$. The gap only widens.",
+   "origin": "generated",
+   "illustrates": [
+    "thm.cantor",
+    "def.power-set"
+   ],
+   "sources": [],
+   "plot": {
+    "x": {
+     "label": "n",
+     "min": 0,
+     "max": 6
+    },
+    "y": {
+     "label": "size",
+     "min": 0,
+     "max": 64
+    },
+    "series": [
+     {
+      "label": "|A| = n",
+      "points": [
+       [
+        0,
+        0
+       ],
+       [
+        1,
+        1
+       ],
+       [
+        2,
+        2
+       ],
+       [
+        3,
+        3
+       ],
+       [
+        4,
+        4
+       ],
+       [
+        5,
+        5
+       ],
+       [
+        6,
+        6
+       ]
+      ]
+     },
+     {
+      "label": "|P(A)| = 2ⁿ",
+      "points": [
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        2,
+        4
+       ],
+       [
+        3,
+        8
+       ],
+       [
+        4,
+        16
+       ],
+       [
+        5,
+        32
+       ],
+       [
+        6,
+        64
+       ]
+      ]
+     }
+    ]
+   }
+  }
+ ],
+ "applications": [],
+ "quiz": [
+  {
+   "id": "quiz.card-1",
+   "kind": "truefalse",
+   "prompt": "$\\mathbb{Z}$ is countable.",
+   "answer": true,
+   "explanation": "List it as $0, -1, 1, -2, 2, \\dots$",
+   "about": [
+    "ex.integers-countable",
+    "def.countable"
+   ],
+   "difficulty": 1
+  },
+  {
+   "id": "quiz.card-2",
+   "kind": "mcq",
+   "prompt": "In the proof of Cantor's theorem for $f : A \\to \\mathcal{P}(A)$, the diagonal set is…",
+   "options": [
+    "$\\{a : a \\in f(a)\\}$",
+    "$\\{a : a \\notin f(a)\\}$",
+    "$f[A]$",
+    "$A \\setminus f(a)$"
+   ],
+   "answer": 1,
+   "explanation": "$D$ disagrees with each $f(a)$ about $a$ itself.",
+   "about": [
+    "thm.cantor"
+   ],
+   "difficulty": 2
+  },
+  {
+   "id": "quiz.card-3",
+   "kind": "open",
+   "prompt": "Show that the even natural numbers are equinumerous with $\\mathbb{N}$.",
+   "answer": "$n \\mapsto 2n$ is injective and hits every even number, so it is a bijection.",
+   "explanation": "",
+   "about": [
+    "def.equinumerous"
+   ],
+   "difficulty": 1
+  },
+  {
+   "id": "quiz.card-4",
+   "kind": "truefalse",
+   "prompt": "If $|A| \\le |B|$ and $|B| \\le |A|$ then $|A| = |B|$.",
+   "answer": true,
+   "explanation": "This is the Cantor–Schröder–Bernstein theorem.",
+   "about": [
+    "thm.cantor-bernstein"
+   ],
+   "difficulty": 2
+  },
+  {
+   "id": "quiz.card-5",
+   "kind": "flashcard",
+   "prompt": "When is a set countable?",
+   "answer": "When it is finite or equinumerous with $\\mathbb{N}$; equivalently, when it injects into $\\mathbb{N}$.",
+   "explanation": "",
+   "about": [
+    "def.countable"
+   ],
+   "difficulty": 1
+  }
+ ],
+ "schemaVersion": 1
+}

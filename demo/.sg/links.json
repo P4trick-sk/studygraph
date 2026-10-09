@@ -1,0 +1,254 @@
+[
+ {
+  "node": "def.power-set",
+  "field": "explanation.intuition",
+  "text": "elements",
+  "target": "def.set",
+  "score": 5
+ },
+ {
+  "node": "thm.de-morgan",
+  "field": "explanation.detailed",
+  "text": "element",
+  "target": "def.set",
+  "score": 5
+ },
+ {
+  "node": "ex.power-set-of-3",
+  "field": "statement",
+  "text": "elements",
+  "target": "def.set",
+  "score": 5
+ },
+ {
+  "node": "def.injection",
+  "field": "explanation.pitfalls",
+  "text": "element",
+  "target": "def.set",
+  "score": 5
+ },
+ {
+  "node": "def.bijection",
+  "field": "explanation.intuition",
+  "text": "element",
+  "target": "def.set",
+  "score": 5
+ },
+ {
+  "node": "cor.composition-bijective",
+  "field": "proof.steps[0].text",
+  "text": "injective",
+  "target": "def.injection",
+  "score": 5
+ },
+ {
+  "node": "def.countable",
+  "field": "explanation.intuition",
+  "text": "elements",
+  "target": "def.set",
+  "score": 5
+ },
+ {
+  "node": "def.countable",
+  "field": "explanation.detailed",
+  "text": "injection",
+  "target": "def.injection",
+  "score": 5
+ },
+ {
+  "node": "def.countable",
+  "field": "explanation.detailed",
+  "text": "surjection",
+  "target": "def.surjection",
+  "score": 5
+ },
+ {
+  "node": "lem.subset-countable",
+  "field": "proof.steps[1].why",
+  "text": "elements",
+  "target": "def.set",
+  "score": 5
+ },
+ {
+  "node": "ex.integers-countable",
+  "field": "explanation.intuition",
+  "text": "negative",
+  "target": "def.connectives",
+  "score": 5
+ },
+ {
+  "node": "ex.integers-countable",
+  "field": "explanation.detailed",
+  "text": "Injective",
+  "target": "def.injection",
+  "score": 5
+ },
+ {
+  "node": "ex.integers-countable",
+  "field": "explanation.detailed",
+  "text": "Surjective",
+  "target": "def.surjection",
+  "score": 5
+ },
+ {
+  "node": "thm.cantor",
+  "field": "explanation.intuition",
+  "text": "elements",
+  "target": "def.set",
+  "score": 5
+ },
+ {
+  "node": "thm.cantor",
+  "field": "explanation.pitfalls",
+  "text": "injection",
+  "target": "def.injection",
+  "score": 5
+ },
+ {
+  "node": "cor.pn-uncountable",
+  "field": "proof.steps[1].text",
+  "text": "surjection",
+  "target": "def.surjection",
+  "score": 5
+ },
+ {
+  "node": "prob.rationals-countable",
+  "field": "explanation.detailed",
+  "text": "injective",
+  "target": "def.injection",
+  "score": 5
+ },
+ {
+  "node": "def.equivalence",
+  "field": "explanation.detailed",
+  "text": "connective",
+  "target": "def.connectives",
+  "score": 5
+ },
+ {
+  "node": "def.set",
+  "field": "explanation.pitfalls",
+  "text": "subset",
+  "target": "def.subset",
+  "score": 4
+ },
+ {
+  "node": "ex.power-set-of-3",
+  "field": "explanation.intuition",
+  "text": "subset",
+  "target": "def.subset",
+  "score": 4
+ },
+ {
+  "node": "def.function",
+  "field": "statement",
+  "text": "subset",
+  "target": "def.subset",
+  "score": 4
+ },
+ {
+  "node": "def.bijection",
+  "field": "statement",
+  "text": "function",
+  "target": "def.function",
+  "score": 4
+ },
+ {
+  "node": "def.bijection",
+  "field": "explanation.detailed",
+  "text": "proposition",
+  "target": "def.proposition",
+  "score": 4
+ },
+ {
+  "node": "prop.inverse",
+  "field": "statement",
+  "text": "function",
+  "target": "def.function",
+  "score": 4
+ },
+ {
+  "node": "def.equinumerous",
+  "field": "explanation.detailed",
+  "text": "composition",
+  "target": "def.composition",
+  "score": 4
+ },
+ {
+  "node": "def.equinumerous",
+  "field": "explanation.pitfalls",
+  "text": "subset",
+  "target": "def.subset",
+  "score": 4
+ },
+ {
+  "node": "def.countable",
+  "field": "statement",
+  "text": "uncountable",
+  "target": "cor.pn-uncountable",
+  "score": 4
+ },
+ {
+  "node": "ex.integers-countable",
+  "field": "statement",
+  "text": "bijection",
+  "target": "def.bijection",
+  "score": 4
+ },
+ {
+  "node": "thm.cantor",
+  "field": "explanation.intuition",
+  "text": "subset",
+  "target": "def.subset",
+  "score": 4
+ },
+ {
+  "node": "thm.cantor",
+  "field": "explanation.pitfalls",
+  "text": "bijection",
+  "target": "def.bijection",
+  "score": 4
+ },
+ {
+  "node": "thm.cantor",
+  "field": "proof.steps[0].text",
+  "text": "function",
+  "target": "def.function",
+  "score": 4
+ },
+ {
+  "node": "cor.pn-uncountable",
+  "field": "proof.steps[0].text",
+  "text": "bijection",
+  "target": "def.bijection",
+  "score": 4
+ },
+ {
+  "node": "cor.pn-uncountable",
+  "field": "proof.steps[1].text",
+  "text": "Cantor",
+  "target": "thm.cantor-bernstein",
+  "score": 4
+ },
+ {
+  "node": "def.connectives",
+  "field": "explanation.detailed",
+  "text": "function",
+  "target": "def.function",
+  "score": 4
+ },
+ {
+  "node": "thm.de-morgan",
+  "field": "explanation.detailed",
+  "text": "statement",
+  "target": "def.proposition",
+  "score": 3
+ },
+ {
+  "node": "def.equivalence",
+  "field": "explanation.detailed",
+  "text": "statement",
+  "target": "def.proposition",
+  "score": 3
+ }
+]

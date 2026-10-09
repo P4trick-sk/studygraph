@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="{{LANG}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESCRIPTION}}">
+<meta name="generator" content="Studygraph {{ENGINE}}">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📐</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
+<style>{{CSS}}</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+</head>
+<body>
+<a class="sr" href="#main">Skip to content</a>
+<div class="app">
+  <aside class="rail" id="rail" aria-label="Course"></aside>
+  <div class="mainc">
+    <div class="topbar">
+      <button class="iconbtn menu-btn" id="menuBtn" aria-label="Topics">☰</button>
+      <button class="iconbtn" id="backBtn" aria-label="Back">←</button>
+      <div class="search"><input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search a concept, theorem, author…  (Ctrl+K)" aria-label="Search the course"><div id="results" hidden></div></div>
+    </div>
+    <main id="main"><p class="loadnote">Loading the course…</p></main>
+  </div>
+</div>
+<div id="scrim"></div>
+<script>window.SG_BOOT = {{BOOT}};</script>
+<script>{{APP}}</script>
+</body>
+</html>

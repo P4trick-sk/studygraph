@@ -1,0 +1,52 @@
+{
+ "schemaVersion": 1,
+ "topics": [
+  {
+   "id": "sets",
+   "title": "Sets and operations",
+   "course": "A",
+   "order": 1,
+   "sourceFiles": [
+    "intro-notes.pdf"
+   ],
+   "status": "checked"
+  },
+  {
+   "id": "functions",
+   "title": "Functions",
+   "course": "A",
+   "order": 2,
+   "sourceFiles": [
+    "intro-notes.pdf"
+   ],
+   "status": "checked"
+  },
+  {
+   "id": "cardinality",
+   "title": "Cardinality",
+   "course": "A",
+   "order": 3,
+   "sourceFiles": [
+    "intro-notes.pdf"
+   ],
+   "status": "reviewing"
+  },
+  {
+   "id": "logic",
+   "title": "Propositional logic",
+   "course": "B",
+   "order": 4,
+   "sourceFiles": [
+    "intro-notes.pdf"
+   ],
+   "status": "reviewing"
+  }
+ ],
+ "reserved": [
+  {
+   "id": "thm.compactness",
+   "topic": "predicate-logic",
+   "title": "Compactness theorem"
+  }
+ ]
+}

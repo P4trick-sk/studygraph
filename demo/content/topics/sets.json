@@ -1,0 +1,558 @@
+{
+ "meta": {
+  "id": "sets",
+  "title": "Sets and operations",
+  "course": "A",
+  "order": 1,
+  "sourceFiles": [
+   "intro-notes.pdf"
+  ],
+  "summary": "The vocabulary of everything else: sets, subsets, the basic operations and the first laws they obey.",
+  "overview": "We start from the informal notion of a set and its elements, then build new sets from old ones: subsets, unions, intersections, complements, power sets and products. De Morgan's laws are the first theorem, proved by translating sets into logic.",
+  "keyQuestions": [
+   "When are two sets equal?",
+   "Why does $\\mathcal{P}(A)$ have $2^n$ elements?",
+   "How do you prove two sets are equal?"
+  ],
+  "prerequisites": [],
+  "alsoCovers": [],
+  "status": "checked"
+ },
+ "nodes": [
+  {
+   "id": "def.set",
+   "type": "definition",
+   "topic": "sets",
+   "title": "Set",
+   "terms": [
+    {
+     "term": "set",
+     "alt": "množina"
+    },
+    {
+     "term": "element",
+     "alt": "prvok",
+     "symbol": "\\in"
+    }
+   ],
+   "aliases": [
+    "collection"
+   ],
+   "tags": [
+    "foundations"
+   ],
+   "origin": "slides",
+   "statement": "A **set** is a collection of distinct objects, called its *elements*. We write $x \\in A$ when $x$ is an element of $A$, and $x \\notin A$ otherwise. Two sets are equal exactly when they have the same elements.",
+   "uses": [],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 3,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 2,
+     "label": "p. 2"
+    }
+   ],
+   "explanation": {
+    "intuition": "A set is a bag that only remembers *what* is inside it: not order, not how many times you put something in.",
+    "detailed": "Equality by elements is called *extensionality*: $\\{1,2\\} = \\{2,1\\} = \\{1,1,2\\}$. Sets can contain other sets, so $\\{\\emptyset\\}$ is a set with one element, and it is different from $\\emptyset$.",
+    "pitfalls": "Do not confuse $\\in$ (is an element of) with $\\subseteq$ (is a subset of). $1 \\in \\{1,2\\}$ but $1 \\not\\subseteq \\{1,2\\}$.",
+    "examples": "$\\mathbb{N} = \\{0,1,2,\\dots\\}$, $\\{x \\in \\mathbb{N} : x \\text{ is even}\\}$, and the empty set $\\emptyset$."
+   }
+  },
+  {
+   "id": "def.subset",
+   "type": "definition",
+   "topic": "sets",
+   "title": "Subset",
+   "terms": [
+    {
+     "term": "subset",
+     "alt": "podmnožina",
+     "symbol": "\\subseteq"
+    }
+   ],
+   "aliases": [
+    "inclusion"
+   ],
+   "tags": [],
+   "origin": "slides",
+   "statement": "$A$ is a **subset** of $B$, written $A \\subseteq B$, when every element of $A$ is an element of $B$. Equivalently, $A \\subseteq B$ and $B \\subseteq A$ hold together exactly when $A = B$ for any two [sets](def.set).",
+   "uses": [
+    "def.set"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 3,
+     "label": "p. 3"
+    }
+   ],
+   "explanation": {
+    "intuition": "Every member of $A$ also has a membership card for $B$.",
+    "detailed": "To prove $A \\subseteq B$, take an arbitrary $x \\in A$ and show $x \\in B$. To prove $A = B$, prove both inclusions. The empty set is a subset of every set, because there is no element of $\\emptyset$ that could fail the test.",
+    "pitfalls": "$A \\subseteq B$ allows $A = B$. The strict version $A \\subsetneq B$ additionally requires $A \\neq B$.",
+    "examples": "$\\{1\\} \\subseteq \\{1,2\\}$, $\\emptyset \\subseteq \\{7\\}$, but $\\{3\\} \\not\\subseteq \\{1,2\\}$."
+   }
+  },
+  {
+   "id": "def.union-intersection",
+   "type": "definition",
+   "topic": "sets",
+   "title": "Union, intersection and complement",
+   "terms": [
+    {
+     "term": "union",
+     "alt": "zjednotenie",
+     "symbol": "\\cup"
+    },
+    {
+     "term": "intersection",
+     "alt": "prienik",
+     "symbol": "\\cap"
+    },
+    {
+     "term": "complement",
+     "alt": "doplnok"
+    }
+   ],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "For [sets](def.set) $A, B$ inside a universe $U$: $A \\cup B = \\{x : x \\in A \\text{ or } x \\in B\\}$, $A \\cap B = \\{x : x \\in A \\text{ and } x \\in B\\}$, and the complement $\\overline{A} = U \\setminus A = \\{x \\in U : x \\notin A\\}$.",
+   "uses": [
+    "def.set"
+   ],
+   "relations": [
+    {
+     "type": "analogue",
+     "target": "def.connectives",
+     "note": "union, intersection and complement mirror or, and, not"
+    }
+   ],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 4,
+     "label": "p. 4"
+    }
+   ],
+   "explanation": {
+    "intuition": "Union keeps anything in either set, intersection keeps only what both share, complement keeps everything else in the universe.",
+    "detailed": "These operations follow the logical [connectives](def.connectives): $\\cup$ behaves like $\\lor$, $\\cap$ like $\\land$, and complement like $\\neg$. That is why laws such as De Morgan's hold for both.",
+    "pitfalls": "A complement only makes sense relative to a fixed universe $U$.",
+    "examples": "With $U = \\{1,\\dots,5\\}$, $A = \\{1,2\\}$, $B = \\{2,3\\}$: $A \\cup B = \\{1,2,3\\}$, $A \\cap B = \\{2\\}$, $\\overline{A} = \\{3,4,5\\}$."
+   }
+  },
+  {
+   "id": "def.power-set",
+   "type": "definition",
+   "topic": "sets",
+   "title": "Power set",
+   "terms": [
+    {
+     "term": "power set",
+     "alt": "potenčná množina",
+     "symbol": "\\mathcal{P}"
+    }
+   ],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "The **power set** of $A$ is the set of all its [subsets](def.subset): $\\mathcal{P}(A) = \\{X : X \\subseteq A\\}$.",
+   "uses": [
+    "def.subset"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 3,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 5,
+     "label": "p. 5"
+    }
+   ],
+   "explanation": {
+    "intuition": "List every way of choosing some elements of $A$, including choosing none or all of them.",
+    "detailed": "For a finite set with $n$ elements, each element is either in or out of a subset, giving $|\\mathcal{P}(A)| = 2^n$.",
+    "pitfalls": "$\\emptyset$ and $A$ itself are always elements of $\\mathcal{P}(A)$.",
+    "examples": "$\\mathcal{P}(\\{a,b\\}) = \\{\\emptyset, \\{a\\}, \\{b\\}, \\{a,b\\}\\}$."
+   }
+  },
+  {
+   "id": "def.cartesian-product",
+   "type": "definition",
+   "topic": "sets",
+   "title": "Cartesian product",
+   "terms": [
+    {
+     "term": "Cartesian product",
+     "alt": "karteziánsky súčin",
+     "symbol": "\\times"
+    },
+    {
+     "term": "ordered pair",
+     "alt": "usporiadaná dvojica"
+    }
+   ],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "The **Cartesian product** of [sets](def.set) $A$ and $B$ is the set of ordered pairs $A \\times B = \\{(a,b) : a \\in A,\\ b \\in B\\}$, where $(a,b) = (c,d)$ exactly when $a = c$ and $b = d$.",
+   "uses": [
+    "def.set"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 6,
+     "label": "p. 6"
+    }
+   ],
+   "explanation": {
+    "intuition": "A grid: rows from $A$, columns from $B$, one cell per pair.",
+    "detailed": "Unlike sets, pairs remember order: $(1,2) \\neq (2,1)$. For finite sets $|A \\times B| = |A| \\cdot |B|$.",
+    "pitfalls": "$A \\times B \\neq B \\times A$ in general.",
+    "examples": "$\\{1,2\\} \\times \\{x\\} = \\{(1,x), (2,x)\\}$."
+   }
+  },
+  {
+   "id": "thm.de-morgan",
+   "type": "theorem",
+   "topic": "sets",
+   "title": "De Morgan's laws for sets",
+   "terms": [
+    {
+     "term": "De Morgan's laws",
+     "alt": "De Morganove zákony"
+    }
+   ],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "For subsets $A, B$ of a universe $U$: $\\overline{A \\cup B} = \\overline{A} \\cap \\overline{B}$ and $\\overline{A \\cap B} = \\overline{A} \\cup \\overline{B}$, with operations as in [union, intersection and complement](def.union-intersection).",
+   "uses": [
+    "def.union-intersection"
+   ],
+   "relations": [
+    {
+     "type": "analogue",
+     "target": "thm.de-morgan-logic",
+     "note": "the same law for propositions"
+    }
+   ],
+   "figures": [
+    "fig.de-morgan-table"
+   ],
+   "difficulty": 2,
+   "importance": 3,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 7,
+     "label": "p. 7"
+    }
+   ],
+   "explanation": {
+    "intuition": "Not being in either set means being outside both; not being in both means being outside at least one.",
+    "detailed": "The proof is pure *element chasing*: rewrite membership with the definitions until the statement becomes a law of logic, apply that law, and rewrite back.",
+    "pitfalls": "The complement swaps the operation: $\\overline{A \\cup B}$ is **not** $\\overline{A} \\cup \\overline{B}$.",
+    "examples": "$U = \\{1,2,3,4\\}$, $A=\\{1\\}$, $B=\\{2\\}$: $\\overline{A\\cup B} = \\{3,4\\} = \\{2,3,4\\} \\cap \\{1,3,4\\}$."
+   },
+   "proof": {
+    "origin": "slides",
+    "status": "full",
+    "idea": "Translate membership into logic, apply the logical law, translate back.",
+    "strategy": "Element chasing: show both sides contain exactly the same elements of $U$.",
+    "steps": [
+     {
+      "text": "Let $x \\in U$. Then $x \\in \\overline{A \\cup B}$ iff $x \\notin A \\cup B$.",
+      "why": "Definition of complement relative to $U$.",
+      "uses": [
+       "def.union-intersection"
+      ]
+     },
+     {
+      "text": "$x \\notin A \\cup B$ iff it is not the case that ($x \\in A$ or $x \\in B$).",
+      "why": "Definition of union.",
+      "uses": [
+       "def.union-intersection"
+      ]
+     },
+     {
+      "text": "That holds iff $x \\notin A$ and $x \\notin B$.",
+      "why": "De Morgan's law for propositions: $\\neg(p \\lor q) \\equiv \\neg p \\land \\neg q$ with $p$ = '$x \\in A$', $q$ = '$x \\in B$'.",
+      "uses": [
+       "thm.de-morgan-logic"
+      ]
+     },
+     {
+      "text": "That holds iff $x \\in \\overline{A} \\cap \\overline{B}$. The second law follows by applying the first to $\\overline{A}$ and $\\overline{B}$ and taking complements.",
+      "why": "Definitions of complement and intersection, and $\\overline{\\overline{A}} = A$.",
+      "uses": [
+       "def.union-intersection"
+      ]
+     }
+    ]
+   },
+   "attribution": "De Morgan"
+  },
+  {
+   "id": "ex.power-set-of-3",
+   "type": "example",
+   "topic": "sets",
+   "title": "Power set of a 3-element set",
+   "terms": [],
+   "aliases": [],
+   "tags": [],
+   "origin": "slides",
+   "statement": "$\\mathcal{P}(\\{1,2,3\\}) = \\{\\emptyset, \\{1\\}, \\{2\\}, \\{3\\}, \\{1,2\\}, \\{1,3\\}, \\{2,3\\}, \\{1,2,3\\}\\}$, which has $2^3 = 8$ elements, as the [power set](def.power-set) count predicts.",
+   "uses": [
+    "def.power-set"
+   ],
+   "relations": [],
+   "figures": [],
+   "difficulty": 1,
+   "importance": 2,
+   "review": {
+    "status": "checked",
+    "notes": [],
+    "checkedBy": "demo",
+    "checkedAt": "2026-10-01"
+   },
+   "source": [
+    {
+     "file": "intro-notes.pdf",
+     "page": 5,
+     "label": "p. 5"
+    }
+   ],
+   "explanation": {
+    "intuition": "Grow the list one element at a time: every old subset appears once without the new element and once with it.",
+    "detailed": "This doubling argument is a proof that $|\\mathcal{P}(A)| = 2^{|A|}$ by induction on $|A|$.",
+    "pitfalls": "",
+    "examples": ""
+   },
+   "checks": [
+    {
+     "verifier": "expr",
+     "expr": "2**3",
+     "expect": 8
+    }
+   ]
+  },
+  {
+   "id": "rem.russell",
+   "type": "remark",
+   "topic": "sets",
+   "title": "Russell's paradox",
+   "terms": [],
+   "aliases": [],
+   "tags": [],
+   "origin": "supplement",
+   "statement": "Not every description defines a [set](def.set). If $R = \\{x : x \\notin x\\}$ were a set, then $R \\in R$ iff $R \\notin R$. Axiomatic set theory avoids this by only forming subsets of sets already known.",
+   "uses": [
+    "def.set"
+   ],
+   "relations": [
+    {
+     "type": "analogue",
+     "target": "thm.cantor",
+     "note": "the same diagonal trick"
+    }
+   ],
+   "figures": [],
+   "difficulty": 2,
+   "importance": 2,
+   "review": {
+    "status": "flagged",
+    "notes": [
+     "The slides only mention the paradox by name; this wording was written from general knowledge and needs a check against the lecture."
+    ]
+   },
+   "explanation": {
+    "intuition": "A set that collects exactly the sets that do not contain themselves cannot decide whether it contains itself.",
+    "detailed": "The fix in Zermelo–Fraenkel set theory is the separation axiom: $\\{x \\in A : \\varphi(x)\\}$ is a set whenever $A$ is.",
+    "pitfalls": "",
+    "examples": ""
+   },
+   "attribution": "Russell"
+  }
+ ],
+ "figures": [
+  {
+   "id": "fig.de-morgan-table",
+   "kind": "table",
+   "title": "De Morgan's law by membership",
+   "caption": "Each row is one possible membership of $x$ in $A$ and $B$. The last two columns always agree.",
+   "origin": "generated",
+   "illustrates": [
+    "thm.de-morgan"
+   ],
+   "sources": [],
+   "columns": [
+    "$x \\in A$",
+    "$x \\in B$",
+    "$x \\in \\overline{A \\cup B}$",
+    "$x \\in \\overline{A} \\cap \\overline{B}$"
+   ],
+   "rows": [
+    [
+     "yes",
+     "yes",
+     "no",
+     "no"
+    ],
+    [
+     "yes",
+     "no",
+     "no",
+     "no"
+    ],
+    [
+     "no",
+     "yes",
+     "no",
+     "no"
+    ],
+    [
+     "no",
+     "no",
+     "yes",
+     "yes"
+    ]
+   ]
+  }
+ ],
+ "applications": [],
+ "quiz": [
+  {
+   "id": "quiz.sets-1",
+   "kind": "mcq",
+   "prompt": "How many elements does $\\mathcal{P}(\\{a,b,c,d\\})$ have?",
+   "options": [
+    "4",
+    "8",
+    "16",
+    "24"
+   ],
+   "answer": 2,
+   "explanation": "Each of the 4 elements is in or out of a subset: $2^4 = 16$.",
+   "about": [
+    "def.power-set"
+   ],
+   "difficulty": 1,
+   "check": {
+    "verifier": "expr",
+    "expr": "2**4"
+   }
+  },
+  {
+   "id": "quiz.sets-2",
+   "kind": "truefalse",
+   "prompt": "$\\emptyset \\subseteq A$ for every set $A$.",
+   "answer": true,
+   "explanation": "There is no element of $\\emptyset$ that could fail to be in $A$.",
+   "about": [
+    "def.subset"
+   ],
+   "difficulty": 1
+  },
+  {
+   "id": "quiz.sets-3",
+   "kind": "flashcard",
+   "prompt": "State both of De Morgan's laws for sets.",
+   "answer": "$\\overline{A \\cup B} = \\overline{A} \\cap \\overline{B}$ and $\\overline{A \\cap B} = \\overline{A} \\cup \\overline{B}$.",
+   "explanation": "",
+   "about": [
+    "thm.de-morgan"
+   ],
+   "difficulty": 1
+  },
+  {
+   "id": "quiz.sets-4",
+   "kind": "open",
+   "prompt": "Prove that $A \\cap (B \\cup C) = (A \\cap B) \\cup (A \\cap C)$.",
+   "answer": "Take $x$. $x$ is in the left side iff $x \\in A$ and ($x \\in B$ or $x \\in C$), iff ($x \\in A$ and $x \\in B$) or ($x \\in A$ and $x \\in C$) by distributivity of $\\land$ over $\\lor$, iff $x$ is in the right side.",
+   "explanation": "Element chasing, exactly as in De Morgan's laws.",
+   "about": [
+    "def.union-intersection",
+    "def.subset"
+   ],
+   "difficulty": 2
+  },
+  {
+   "id": "quiz.sets-5",
+   "kind": "mcq",
+   "prompt": "How many elements does $\\{1,2\\} \\times \\{a,b,c\\}$ have?",
+   "options": [
+    "5",
+    "6",
+    "8",
+    "9"
+   ],
+   "answer": 1,
+   "explanation": "$|A \\times B| = |A| \\cdot |B| = 2 \\cdot 3$.",
+   "about": [
+    "def.cartesian-product"
+   ],
+   "difficulty": 1,
+   "check": {
+    "verifier": "expr",
+    "expr": "2*3"
+   }
+  }
+ ],
+ "schemaVersion": 1
+}

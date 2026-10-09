@@ -1,0 +1,126 @@
+{
+ "schemaVersion": 1,
+ "preset": "math",
+ "app": {
+  "name": "Studygraph",
+  "courseId": "demo",
+  "tagline": "",
+  "heroTitle": "Sets, functions and logic",
+  "heroText": "A sample course showing how Studygraph turns lecture notes into a connected study app."
+ },
+ "language": {
+  "primary": "en",
+  "alt": "sk",
+  "ui": "en"
+ },
+ "courses": [
+  {
+   "id": "A",
+   "title": "Set theory"
+  },
+  {
+   "id": "B",
+   "title": "Mathematical logic"
+  }
+ ],
+ "figureKinds": [
+  "graph",
+  "table",
+  "plot"
+ ],
+ "linkIgnore": [
+  "set"
+ ],
+ "nodeTypes": [
+  {
+   "type": "definition",
+   "prefix": "def",
+   "label": "Definition",
+   "color": "#7cc4e8",
+   "rank": 0,
+   "needsTerms": true
+  },
+  {
+   "type": "lemma",
+   "prefix": "lem",
+   "label": "Lemma",
+   "color": "#f0d070",
+   "rank": 1,
+   "needsProof": true
+  },
+  {
+   "type": "proposition",
+   "prefix": "prop",
+   "label": "Proposition",
+   "color": "#e8a86c",
+   "rank": 1,
+   "needsProof": true
+  },
+  {
+   "type": "fact",
+   "prefix": "fact",
+   "label": "Fact",
+   "color": "#e3c48e",
+   "rank": 1
+  },
+  {
+   "type": "theorem",
+   "prefix": "thm",
+   "label": "Theorem",
+   "color": "#c3d98a",
+   "rank": 2,
+   "needsProof": true
+  },
+  {
+   "type": "algorithm",
+   "prefix": "alg",
+   "label": "Algorithm",
+   "color": "#95d8bb",
+   "rank": 2
+  },
+  {
+   "type": "corollary",
+   "prefix": "cor",
+   "label": "Corollary",
+   "color": "#a5e07c",
+   "rank": 3,
+   "needsProof": true
+  },
+  {
+   "type": "example",
+   "prefix": "ex",
+   "label": "Example",
+   "color": "#f2a3c3",
+   "rank": 4,
+   "reference": true
+  },
+  {
+   "type": "problem",
+   "prefix": "prob",
+   "label": "Problem",
+   "color": "#c8a8f0",
+   "rank": 4,
+   "reference": true
+  },
+  {
+   "type": "remark",
+   "prefix": "rem",
+   "label": "Remark",
+   "color": "#a8b2ad",
+   "rank": 4,
+   "reference": true
+  }
+ ],
+ "relationTypes": [
+  "generalizes",
+  "specializes",
+  "equivalent",
+  "implies",
+  "converse-of",
+  "contrasts-with",
+  "algorithm-for",
+  "counterexample-to",
+  "analogue",
+  "see-also"
+ ]
+}
