@@ -379,5 +379,6 @@ mark { background: color-mix(in oklab, var(--focus) 35%, transparent); color: in
 .tablist [aria-selected="true"] .cnt { background: color-mix(in oklab, var(--accent) 18%, transparent); color: var(--text); }
 .rgrid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 2px 24px; }
 .rgrid > [hidden] { display: none; }
+.rgrid.short { grid-template-columns: minmax(0, 1fr); }
 .rpanel .morebtn { margin-top: 12px; }
 @media (max-width: 600px) { .isec { margin-top: 32px; padding-top: 24px; } .tablist [role="tab"] { padding: 9px 10px; font-size: 14px; } }

@@ -130,12 +130,12 @@ export function readinessLine(id) {
 }
 const MASTERED = .7, NEXT_UP = 5;
 // Item page connections: one tab per list, TAB_PAGE refs at a time with a "show more" button for the next batch.
-const TAB_PAGE = 12;
+const TAB_PAGE = 12, SHORT_LIST = 4; // lists up to SHORT_LIST items use one full-width column
 const moreLabel = left => `Show ${Math.min(TAB_PAGE, left)} more (${left} left)`;
 function relTabs(tabs) {
   const ts = tabs.filter(t => t.ids.length); if (!ts.length) return "";
   return `<div class="rtabs"><div class="tablist" role="tablist" aria-label="Connections">${ts.map((t, i) => `<button role="tab" id="rt-${t.key}" aria-controls="rp-${t.key}" aria-selected="${!i}" tabindex="${i ? -1 : 0}">${t.label}<span class="cnt">${t.ids.length}</span></button>`).join("")}</div>
-    ${ts.map((t, i) => `<div role="tabpanel" class="rpanel" id="rp-${t.key}" aria-labelledby="rt-${t.key}"${i ? " hidden" : ""}><div class="reflist rgrid">${t.ids.map((u, k) => k < TAB_PAGE ? ref(u) : ref(u).replace(/^<(a|div) /, "<$1 hidden ")).join("")}</div>${t.ids.length > TAB_PAGE ? `<button class="iconbtn morebtn">${moreLabel(t.ids.length - TAB_PAGE)}</button>` : ""}</div>`).join("")}</div>`;
+    ${ts.map((t, i) => `<div role="tabpanel" class="rpanel" id="rp-${t.key}" aria-labelledby="rt-${t.key}"${i ? " hidden" : ""}><div class="reflist rgrid${t.ids.length <= SHORT_LIST ? " short" : ""}">${t.ids.map((u, k) => k < TAB_PAGE ? ref(u) : ref(u).replace(/^<(a|div) /, "<$1 hidden ")).join("")}</div>${t.ids.length > TAB_PAGE ? `<button class="iconbtn morebtn">${moreLabel(t.ids.length - TAB_PAGE)}</button>` : ""}</div>`).join("")}</div>`;
 }
 function mountRelTabs() {
   const tabs = $$('.rtabs [role="tab"]');
