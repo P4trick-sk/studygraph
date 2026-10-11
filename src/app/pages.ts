@@ -168,12 +168,12 @@ VIEWS.n = {
         ${rel.length ? `<div><h3>Related</h3><div class="reflist">${rel.flatMap(([label, g]) => g.items.map(x => ref(x.id, esc(label.toLowerCase()) + (x.note ? " – " + esc(x.note) : "")))).join("")}</div></div>` : ""}
       </div>
       ${apps.length ? `<h2>Where it is used in practice</h2><div class="reflist">${apps.map(a => ref(a)).join("")}</div>` : ""}
-      ${path.length ? `<h2>Learning path</h2><p class="muted small">${path.length} item${path.length > 1 ? "s" : ""} to understand first, in order. <a href="#/path/${encodeURIComponent(id)}">Study this path</a></p><ol class="reflist pathlist">${path.map(p => `<li>${ref(p)}</li>`).join("")}</ol>` : ""}
       <h2>Study it</h2>
       <div class="row"><button class="iconbtn" id="aKnow">I understand this</button><button class="iconbtn" id="aUnsure">Not sure yet</button>${qz.length ? `<button class="iconbtn" id="qThis">Practise ${qz.length} question${qz.length > 1 ? "s" : ""}</button>` : ""}
         <span class="muted small">Mastery <span class="mbar"><i id="mfill" style="width:${m}%"></i></span> <span id="mtext">${m}%</span></span></div>
       <h2>Learn with AI</h2><p class="muted small">The tutor sees this item, its prerequisites and related items, and answers from them. Copy for AI gives you the same material to paste into any chat.</p>
       <div class="row"><button class="iconbtn" id="aTutor">Ask the tutor</button><button class="iconbtn" id="aCopy">Copy for AI</button><a class="iconbtn" href="#/map?node=${encodeURIComponent(id)}&r=1">Open in map</a></div>
+      ${path.length ? `<h2>Learning path</h2><p class="muted small">${path.length} item${path.length > 1 ? "s" : ""} to understand first, in order. <a href="#/path/${encodeURIComponent(id)}">Study this path</a></p><ol class="reflist pathlist">${path.map(p => `<li>${ref(p)}</li>`).join("")}</ol>` : ""}
       ${src ? `<p class="muted small" style="margin-top:28px">Source: ${src}</p>` : ""}
       ${notes.length ? `<details class="notes muted small"><summary>Reliability notes (${notes.length})</summary><ul>${notes.map(x => `<li>${rich(typeof x === "string" ? x : x.text || JSON.stringify(x), { inline: true })}</li>`).join("")}</ul></details>` : ""}
       <div class="pager">${prev ? `<a href="${itemHref(prev)}" data-pv="${esc(prev)}">← ${tt(prev)}</a>` : "<span></span>"}${next ? `<a href="${itemHref(next)}" data-pv="${esc(next)}">${tt(next)} →</a>` : ""}</div>`;
