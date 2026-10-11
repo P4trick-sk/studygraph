@@ -1,6 +1,6 @@
 {
   "name": "studygraph",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Core of Studygraph: schema, engine, CLI and study app for interlinked knowledge-graph courses",
   "type": "module",
   "license": "UNLICENSED",
