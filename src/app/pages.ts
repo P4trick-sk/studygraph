@@ -129,12 +129,25 @@ export function readinessLine(id) {
   return `<p class="ready"><span class="dot" style="background:var(--accent)"></span><span>You know ${rd.known} of ${rd.total} prerequisites. Review ${rd.missing.slice(0, 3).map(m => `<a class="xl" data-pv="${esc(m)}" href="${itemHref(m)}" style="--tc:${colorOf(m)}">${tt(m)}</a>`).join(", ")}${rd.missing.length > 3 ? ` and ${rd.missing.length - 3} more` : ""} first.</span></p>`;
 }
 const MASTERED = .7, NEXT_UP = 5;
-// Item page columns: the first COL_SHOW refs, the rest behind a "+ N more" toggle.
-const COL_SHOW = 6;
-function refCol(title, ids) {
-  if (!ids.length) return "";
-  const rest = ids.length - COL_SHOW;
-  return `<div><h3>${title}</h3><div class="reflist">${ids.slice(0, COL_SHOW).map(u => ref(u)).join("")}</div>${rest > 0 ? `<div class="reflist" hidden>${ids.slice(COL_SHOW).map(u => ref(u)).join("")}</div><button class="linkbtn morebtn" aria-expanded="false" data-more="+ ${rest} more">+ ${rest} more</button>` : ""}</div>`;
+// Item page connections: one tab per list, TAB_PAGE refs at a time with a "show more" button for the next batch.
+const TAB_PAGE = 12;
+const moreLabel = left => `Show ${Math.min(TAB_PAGE, left)} more (${left} left)`;
+function relTabs(tabs) {
+  const ts = tabs.filter(t => t.ids.length); if (!ts.length) return "";
+  return `<div class="rtabs"><div class="tablist" role="tablist" aria-label="Connections">${ts.map((t, i) => `<button role="tab" id="rt-${t.key}" aria-controls="rp-${t.key}" aria-selected="${!i}" tabindex="${i ? -1 : 0}">${t.label}<span class="cnt">${t.ids.length}</span></button>`).join("")}</div>
+    ${ts.map((t, i) => `<div role="tabpanel" class="rpanel" id="rp-${t.key}" aria-labelledby="rt-${t.key}"${i ? " hidden" : ""}><div class="reflist rgrid">${t.ids.map((u, k) => k < TAB_PAGE ? ref(u) : ref(u).replace(/^<(a|div) /, "<$1 hidden ")).join("")}</div>${t.ids.length > TAB_PAGE ? `<button class="iconbtn morebtn">${moreLabel(t.ids.length - TAB_PAGE)}</button>` : ""}</div>`).join("")}</div>`;
+}
+function mountRelTabs() {
+  const tabs = $$('.rtabs [role="tab"]');
+  const select = (t, focus = false) => { tabs.forEach(x => { const on = x === t; x.setAttribute("aria-selected", String(on)); x.tabIndex = on ? 0 : -1; $("#" + x.getAttribute("aria-controls")).hidden = !on; }); if (focus) t.focus(); };
+  tabs.forEach((t, i) => {
+    t.onclick = () => select(t);
+    t.onkeydown = e => { const j = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key]; if (j === undefined) return; e.preventDefault(); select(tabs[(j + tabs.length) % tabs.length], true); };
+  });
+  $$(".rpanel .morebtn").forEach(b => b.onclick = () => {
+    const hid = $$(".rgrid > [hidden]", b.closest(".rpanel")); hid.slice(0, TAB_PAGE).forEach(x => x.hidden = false);
+    const left = hid.length - TAB_PAGE; if (left > 0) b.textContent = moreLabel(left); else b.remove();
+  });
 }
 const ratioBar = (done, total) => `<span class="mbar" title="${done} of ${total} mastered"><i style="width:${total ? Math.round(done / total * 100) : 0}%"></i></span>`;
 // Item page: a fixed-size overview of the learning path; the full list lives on #/path/<id>.
@@ -169,6 +182,11 @@ VIEWS.n = {
     const pr = n.proof, steps = pr?.steps || [];
     const usedBy = G.usedBy[id] || [], rel = relatedGroups(id), apps = G.appsFor[id] || [], qz = G.quizFor[id] || [], figs = G.figuresFor[id] || [];
     const notes = n.review?.notes || [], path = G.learningPath(id);
+    const rels = [
+      { key: "uses", label: "Builds on", ids: (n.uses || []).filter(u => G.nodes[u] || G.apps[u] || G.reserved[u]) },
+      { key: "usedby", label: "Used in", ids: [...usedBy.filter(u => G.nodes[u].topic === n.topic), ...usedBy.filter(u => G.nodes[u].topic !== n.topic)] },
+      { key: "related", label: "Related", ids: rel.flatMap(([, g]) => g.items.map(x => x.id)) },
+    ];
     const src = (n.source || []).map(s => `${esc(s.file)}${s.page != null ? `, page ${esc(s.page)}` : s.slide != null ? `, slide ${esc(s.slide)}` : ""}`).join("; ");
     const idx = t.nodeIds.indexOf(id), prev = t.nodeIds[idx - 1], next = t.nodeIds[idx + 1];
     const m = Math.round(mastery(id) * 100);
@@ -179,30 +197,38 @@ VIEWS.n = {
       <div class="statement prose" style="--tc:${T.color}">${rich(n.statement)}</div>
       ${readinessLine(id)}
       ${has(ex.intuition) ? `<div class="intuition prose">${Array.isArray(ex.intuition) ? ex.intuition.map(x => rich(x)).join("") : rich(ex.intuition)}</div>` : ""}
-      ${has(ex.detailed) ? `<h2>In detail</h2>${listify(ex.detailed)}` : ""}
-      ${has(ex.pitfalls) ? `<h2>Pitfalls</h2><div class="pitfalls">${listify(ex.pitfalls)}</div>` : ""}
-      ${has(ex.examples) ? `<h2>Examples</h2>${listify(ex.examples)}` : ""}
-      ${n.explanation ? `<p class="aimark">Explanations are written by AI from the course material; the statement is the source of truth.</p>` : ""}
-      ${pr ? `<h2>${esc(G.cfg.proofLabel)} <span class="origin">${pr.status === "sketch" ? "sketch" : pr.status === "none" ? "not given" : "full"} · ${esc(ORIGIN[pr.origin] || pr.origin || "")}</span></h2>
-        ${pr.strategy ? `<p class="prose"><i>Strategy:</i> ${rich(pr.strategy, { inline: true })}</p>` : ""}
-        ${steps.length ? `<div class="row"><button class="iconbtn" id="stepNext">Show step 1</button><button class="linkbtn" id="stepAll">Show all steps</button><button class="linkbtn" id="stepTry" aria-pressed="false" title="Each next step stays blurred until you reveal it">Try the next step yourself</button></div><ol class="steps" id="steps"></ol>` : ""}
-        ${pr.idea ? `<div class="card prose"><b class="cardh">Idea</b>${rich(pr.idea)}</div>` : ""}` : ""}
-      ${figs.length ? `<h2>Figures</h2>${figs.map(figureHTML).join("")}` : ""}
-      <div class="cols">
-        ${refCol("Builds on", (n.uses || []).filter(u => G.nodes[u] || G.apps[u] || G.reserved[u]))}
-        ${refCol("Used in", [...usedBy.filter(u => G.nodes[u].topic === n.topic), ...usedBy.filter(u => G.nodes[u].topic !== n.topic)])}
-        ${refCol("Related", rel.flatMap(([, g]) => g.items.map(x => x.id)))}
-      </div>
-      ${apps.length ? `<h2>Where it is used in practice</h2><div class="reflist">${apps.map(a => ref(a)).join("")}</div>` : ""}
-      <h2>Study it</h2>
-      <div class="row"><button class="iconbtn" id="aKnow">I understand this</button><button class="iconbtn" id="aUnsure">Not sure yet</button>${qz.length ? `<button class="iconbtn" id="qThis">Practise ${qz.length} question${qz.length > 1 ? "s" : ""}</button>` : ""}
-        <span class="muted small">Mastery <span class="mbar"><i id="mfill" style="width:${m}%"></i></span> <span id="mtext">${m}%</span></span></div>
-      <h2>Learn with AI</h2><p class="muted small">The tutor sees this item, its prerequisites and related items, and answers from them. Copy for AI gives you the same material to paste into any chat.</p>
-      <div class="row"><button class="iconbtn" id="aTutor">Ask the tutor</button><button class="iconbtn" id="aCopy">Copy for AI</button><a class="iconbtn" href="#/map?node=${encodeURIComponent(id)}&r=1">Open in map</a></div>
-      ${path.length ? pathSummary(id, path) : ""}
-      ${src ? `<p class="muted small" style="margin-top:28px">Source: ${src}</p>` : ""}
-      ${notes.length ? `<details class="notes muted small"><summary>Reliability notes (${notes.length})</summary><ul>${notes.map(x => `<li>${rich(typeof x === "string" ? x : x.text || JSON.stringify(x), { inline: true })}</li>`).join("")}</ul></details>` : ""}
-      <div class="pager">${prev ? `<a href="${itemHref(prev)}" data-pv="${esc(prev)}">← ${tt(prev)}</a>` : "<span></span>"}${next ? `<a href="${itemHref(next)}" data-pv="${esc(next)}">${tt(next)} →</a>` : ""}</div>`;
+      ${has(ex.detailed) || has(ex.pitfalls) || has(ex.examples) ? `<section class="isec">
+        ${has(ex.detailed) ? `<h2>In detail</h2>${listify(ex.detailed)}` : ""}
+        ${has(ex.pitfalls) ? `<h2>Pitfalls</h2><div class="pitfalls">${listify(ex.pitfalls)}</div>` : ""}
+        ${has(ex.examples) ? `<h2>Examples</h2>${listify(ex.examples)}` : ""}
+        ${n.explanation ? `<p class="aimark">Explanations are written by AI from the course material; the statement is the source of truth.</p>` : ""}
+      </section>` : ""}
+      ${pr ? `<section class="isec">
+        ${pr ? `<h2>${esc(G.cfg.proofLabel)} <span class="origin">${pr.status === "sketch" ? "sketch" : pr.status === "none" ? "not given" : "full"} · ${esc(ORIGIN[pr.origin] || pr.origin || "")}</span></h2>
+          ${pr.strategy ? `<p class="prose"><i>Strategy:</i> ${rich(pr.strategy, { inline: true })}</p>` : ""}
+          ${steps.length ? `<div class="row"><button class="iconbtn" id="stepNext">Show step 1</button><button class="linkbtn" id="stepAll">Show all steps</button><button class="linkbtn" id="stepTry" aria-pressed="false" title="Each next step stays blurred until you reveal it">Try the next step yourself</button></div><ol class="steps" id="steps"></ol>` : ""}
+          ${pr.idea ? `<div class="card prose"><b class="cardh">Idea</b>${rich(pr.idea)}</div>` : ""}` : ""}
+      </section>` : ""}
+      ${figs.length ? `<section class="isec"><h2>Figures</h2>${figs.map(figureHTML).join("")}</section>` : ""}
+      ${rels.some(t => t.ids.length) || apps.length ? `<section class="isec">
+        ${relTabs(rels)}
+        ${apps.length ? `<h2>Where it is used in practice</h2><div class="reflist">${apps.map(a => ref(a)).join("")}</div>` : ""}
+      </section>` : ""}
+      <section class="isec">
+        <div class="studygrid">
+          <div class="card"><h2>Study it</h2>
+            <div class="row"><button class="iconbtn" id="aKnow">I understand this</button><button class="iconbtn" id="aUnsure">Not sure yet</button>${qz.length ? `<button class="iconbtn" id="qThis">Practise ${qz.length} question${qz.length > 1 ? "s" : ""}</button>` : ""}</div>
+            <div class="row small muted mastery">Mastery <span class="mbar"><i id="mfill" style="width:${m}%"></i></span> <span id="mtext">${m}%</span></div></div>
+          <div class="card"><h2>Learn with AI</h2><p class="muted small">The tutor sees this item, its prerequisites and related items, and answers from them. Copy for AI gives you the same material to paste into any chat.</p>
+            <div class="row"><button class="iconbtn" id="aTutor">Ask the tutor</button><button class="iconbtn" id="aCopy">Copy for AI</button><a class="iconbtn" href="#/map?node=${encodeURIComponent(id)}&r=1">Open in map</a></div></div>
+        </div>
+        ${path.length ? pathSummary(id, path) : ""}
+      </section>
+      <footer class="isec ifoot">
+        ${src ? `<p class="muted small">Source: ${src}</p>` : ""}
+        ${notes.length ? `<details class="notes muted small"><summary>Reliability notes (${notes.length})</summary><ul>${notes.map(x => `<li>${rich(typeof x === "string" ? x : x.text || JSON.stringify(x), { inline: true })}</li>`).join("")}</ul></details>` : ""}
+        <div class="pager">${prev ? `<a href="${itemHref(prev)}" data-pv="${esc(prev)}">← ${tt(prev)}</a>` : "<span></span>"}${next ? `<a href="${itemHref(next)}" data-pv="${esc(next)}">${tt(next)} →</a>` : ""}</div>
+      </footer>`;
   },
   mount(r, root) {
     const G = S.G, id = r.arg, n = G.nodes[id]; if (!n) return;
@@ -239,7 +265,7 @@ VIEWS.n = {
       toast(g >= 3 ? `Marked as understood. It comes back for review in ${fmtDays(S.P.cards[k].due - Date.now())}.` : "Noted. It will come back in today's review."); };
     $("#aKnow").onclick = () => grade(3); $("#aUnsure").onclick = () => grade(1);
     const q = $("#qThis"); if (q) q.onclick = () => startSession("node", { node: id });
-    $$(".morebtn").forEach(b => b.onclick = () => { const more = b.previousElementSibling as HTMLElement, open = more.hidden; more.hidden = !open; b.setAttribute("aria-expanded", String(open)); b.textContent = open ? "Show less" : b.dataset.more; });
+    mountRelTabs();
     const ps = $("#pStudy"); if (ps) ps.onclick = () => { S.P.lastPath = id; saveProgress(false); startSession("path", { node: id }); };
   },
 };

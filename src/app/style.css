@@ -168,12 +168,11 @@ a.xl:hover { border-bottom-style: solid; }
 .ref .note { grid-column: 2; font: 400 12px var(--mono); color: var(--muted); }
 .ref .note:has(.desc) { font: 400 14px/1.5 var(--serif); margin-top: 2px; }
 .ref.pending { color: var(--faint); cursor: help; }
-.morebtn { margin-top: 6px; }
 .pathlist { list-style: decimal; padding-left: 1.6em; }
 .pathlist li::marker { font: 12px var(--mono); color: var(--muted); }
 .pathcard h3 { margin: 14px 0 4px; color: var(--muted); font-size: .9rem; }
 .pathcard > .row:last-child { margin-top: 12px; }
-.pathhead { gap: 12px; } .pathhead > :first-child { flex: 1; min-width: 0; }
+.pathhead { gap: 6px 12px; } .pathhead > :first-child { flex: 1 1 260px; min-width: 0; }
 .pathcard .mbar, .pgroup .mbar { width: 90px; }
 .pathtools { justify-content: flex-end; margin-bottom: 4px; }
 details.pgroup { border: 1px solid var(--line-soft); border-radius: var(--r-m); background: var(--panel); margin-bottom: 10px; }
@@ -185,7 +184,6 @@ details.pgroup > summary .t { flex: 1; min-width: 0; font: 600 1rem var(--sans);
 details.pgroup[open] > summary { border-bottom: 1px solid var(--line-soft); }
 details.pgroup .ilist { padding: 0 8px; } details.pgroup .ilist li:last-child a { border-bottom: 0; }
 .pathgoal { margin-top: 4px; padding: 0 9px; }
-.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px 28px; margin-top: 30px; }
 .attrib { font-family: var(--sans); }
 .terms { font: 14px var(--sans); color: var(--muted); margin-top: 4px; }
 .terms b { color: var(--text); font-weight: 600; }
@@ -359,3 +357,27 @@ mark { background: color-mix(in oklab, var(--focus) 35%, transparent); color: in
 .topic-actions { margin-top: 20px; }
 .lead.prose > :last-child { margin-bottom: 0; }
 .nextgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2px 24px; margin-top: 8px; }
+/* ---------- item page sections */
+.isec { margin-top: 44px; padding-top: 32px; border-top: 1px solid var(--line-soft); }
+.isec > h2:first-child, .isec > .rtabs:first-child { margin-top: 0; }
+.isec .aimark { margin-top: 22px; }
+.isec figure.fig:last-child { margin-bottom: 0; }
+.studygrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.studygrid .card { margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.studygrid .card h2 { font-size: 18px; margin: 0; }
+.studygrid .card p { margin: 0; }
+.studygrid .mastery { margin-top: auto; } .studygrid .mastery .mbar { width: 120px; }
+.studygrid + h2 { margin-top: 32px; }
+.ifoot { padding-top: 18px; } .ifoot p { margin: 0 0 8px; } .ifoot .pager { margin-top: 22px; }
+/* connections tabs */
+.tablist { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; margin-bottom: 14px; }
+.tablist::-webkit-scrollbar { display: none; }
+.tablist [role="tab"] { flex: none; display: inline-flex; align-items: center; gap: 8px; background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: 10px 14px; cursor: pointer; font: 600 15px var(--sans); color: var(--muted); white-space: nowrap; }
+.tablist [role="tab"]:hover { color: var(--text); }
+.tablist [role="tab"][aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); }
+.tablist .cnt { font: 500 12px var(--mono); padding: 1px 7px; border-radius: 10px; background: var(--line-soft); color: var(--muted); }
+.tablist [aria-selected="true"] .cnt { background: color-mix(in oklab, var(--accent) 18%, transparent); color: var(--text); }
+.rgrid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 2px 24px; }
+.rgrid > [hidden] { display: none; }
+.rpanel .morebtn { margin-top: 12px; }
+@media (max-width: 600px) { .isec { margin-top: 32px; padding-top: 24px; } .tablist [role="tab"] { padding: 9px 10px; font-size: 14px; } }
