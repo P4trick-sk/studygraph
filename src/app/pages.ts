@@ -183,8 +183,8 @@ VIEWS.n = {
       ${figs.length ? `<h2>Figures</h2>${figs.map(figureHTML).join("")}` : ""}
       <div class="cols">
         ${(n.uses || []).some(u => G.nodes[u] || G.apps[u] || G.reserved[u]) ? `<div><h3>Builds on</h3><div class="reflist">${n.uses.map(u => ref(u)).join("")}</div></div>` : ""}
-        ${usedBy.length ? `<div><h3>Used in</h3><div class="reflist">${usedBy.map(u => ref(u, S.G.nodes[u].topic !== n.topic ? esc(G.topicById[S.G.nodes[u].topic].title) : "")).join("")}</div></div>` : ""}
-        ${rel.length ? `<div><h3>Related</h3><div class="reflist">${rel.flatMap(([label, g]) => g.items.map(x => ref(x.id, esc(label.toLowerCase()) + (x.note ? " – " + esc(x.note) : "")))).join("")}</div></div>` : ""}
+        ${usedBy.length ? `<div><h3>Used in</h3><div class="reflist">${usedBy.map(u => ref(u)).join("")}</div></div>` : ""}
+        ${rel.length ? `<div><h3>Related</h3><div class="reflist">${rel.flatMap(([, g]) => g.items.map(x => ref(x.id))).join("")}</div></div>` : ""}
       </div>
       ${apps.length ? `<h2>Where it is used in practice</h2><div class="reflist">${apps.map(a => ref(a)).join("")}</div>` : ""}
       <h2>Study it</h2>
