@@ -51,7 +51,7 @@ export const SK = {
   "The tutor is not available here, so the item's tutor bundle was copied. Paste it into Claude with your question.": "Tútor tu nie je dostupný, tak som skopíroval materiál k pojmu. Vlož ho do Clauda spolu s otázkou.",
   "Delete all cards, answers and review verdicts for this course in this browser?": "Vymazať všetky karty, odpovede a rozhodnutia kontroly pre tento kurz v tomto prehliadači?", "Remove all your review verdicts from this browser?": "Odstrániť všetky tvoje rozhodnutia kontroly z prehliadača?",
   "Proof": "Dôkaz", "Definition": "Definícia", "Lemma": "Lema", "Proposition": "Tvrdenie", "Fact": "Fakt", "Theorem": "Veta", "Algorithm": "Algoritmus", "Corollary": "Dôsledok", "Example": "Príklad", "Problem": "Cvičenie", "Remark": "Poznámka", "Prerequisites, in learning order": "Predpoklady v poradí učenia",
-  "Next up": "Na rade", "See the full path": "Celá cesta učenia", "Expand all": "Rozbaliť všetko", "Collapse all": "Zbaliť všetko",
+  "Next up": "Na rade", "See the full path": "Celá cesta učenia", "Expand all": "Rozbaliť všetko", "Show less": "Zobraziť menej", "Collapse all": "Zbaliť všetko",
 };
 export const SK_RE: Array<[RegExp, any]> = [
   [/^This page contains the course (.*)\. Open a course bundle, a knowledge\.json file, or the registry, config and topic files of a course repo together\.$/, "Táto stránka obsahuje kurz $1. Otvoriť môžeš aj balík kurzu, súbor knowledge.json alebo naraz súbory registry, config a témy z repozitára kurzu."],
@@ -63,6 +63,7 @@ export const SK_RE: Array<[RegExp, any]> = [
   [/^You know (\d+) of (\d+) prerequisites\. Review$/, "Poznáš $1 z $2 predpokladov. Najprv si zopakuj"], [/^and (\d+) more first\.$/, "a ďalších $1."], [/^first\.$/, "."],
   [/^(\d+) items? to understand first, in order\.$/, "Najprv treba pochopiť $1 pojmov, v tomto poradí."], [/^Learning path to (.*)$/, "Cesta učenia k: $1"],
   [/^Everything (.*) builds on, in an order where each item only needs the ones above it\. (\d+) of (\d+) are not mastered yet\.$/, "Všetko, na čom stavia $1, v poradí, kde každý pojem potrebuje iba tie nad ním. $2 z $3 ešte neovládaš."],
+  [/^\+ (\d+) more$/, "+ ďalších $1"],
   [/^(\d+) of (\d+) mastered$/, "$1 z $2 zvládnutých"], [/^and (\d+) more not mastered yet\.$/, "a ďalších $1, ktoré ešte neovládaš."],
   [/^(\d+) of (\d+)$/, "$1 z $2"], [/^(\d+) questions, (\d+) cards$/, "$1 otázok, $2 kariet"], [/^Quiz: (.*)$/, "Kvíz: $1"], [/^Path to (.*)$/, "Cesta k: $1"], [/^Practise: (.*)$/, "Precvič: $1"],
   [/^(\d+) remembered, (\d+) to revisit/, "$1 zapamätaných, $2 na zopakovanie"], [/; (\d+) came back a second time\./, "; $1 sa vrátilo druhýkrát."], [/Your next review is due in (.+)\.$/, "Ďalšie opakovanie o $1."],

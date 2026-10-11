@@ -168,6 +168,7 @@ a.xl:hover { border-bottom-style: solid; }
 .ref .note { grid-column: 2; font: 400 12px var(--mono); color: var(--muted); }
 .ref .note:has(.desc) { font: 400 14px/1.5 var(--serif); margin-top: 2px; }
 .ref.pending { color: var(--faint); cursor: help; }
+.morebtn { margin-top: 6px; }
 .pathlist { list-style: decimal; padding-left: 1.6em; }
 .pathlist li::marker { font: 12px var(--mono); color: var(--muted); }
 .pathcard h3 { margin: 14px 0 4px; color: var(--muted); font-size: .9rem; }

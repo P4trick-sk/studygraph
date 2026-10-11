@@ -129,6 +129,13 @@ export function readinessLine(id) {
   return `<p class="ready"><span class="dot" style="background:var(--accent)"></span><span>You know ${rd.known} of ${rd.total} prerequisites. Review ${rd.missing.slice(0, 3).map(m => `<a class="xl" data-pv="${esc(m)}" href="${itemHref(m)}" style="--tc:${colorOf(m)}">${tt(m)}</a>`).join(", ")}${rd.missing.length > 3 ? ` and ${rd.missing.length - 3} more` : ""} first.</span></p>`;
 }
 const MASTERED = .7, NEXT_UP = 5;
+// Item page columns: the first COL_SHOW refs, the rest behind a "+ N more" toggle.
+const COL_SHOW = 6;
+function refCol(title, ids) {
+  if (!ids.length) return "";
+  const rest = ids.length - COL_SHOW;
+  return `<div><h3>${title}</h3><div class="reflist">${ids.slice(0, COL_SHOW).map(u => ref(u)).join("")}</div>${rest > 0 ? `<div class="reflist" hidden>${ids.slice(COL_SHOW).map(u => ref(u)).join("")}</div><button class="linkbtn morebtn" aria-expanded="false" data-more="+ ${rest} more">+ ${rest} more</button>` : ""}</div>`;
+}
 const ratioBar = (done, total) => `<span class="mbar" title="${done} of ${total} mastered"><i style="width:${total ? Math.round(done / total * 100) : 0}%"></i></span>`;
 // Item page: a fixed-size overview of the learning path; the full list lives on #/path/<id>.
 export function pathSummary(id, path) {
@@ -182,9 +189,9 @@ VIEWS.n = {
         ${pr.idea ? `<div class="card prose"><b class="cardh">Idea</b>${rich(pr.idea)}</div>` : ""}` : ""}
       ${figs.length ? `<h2>Figures</h2>${figs.map(figureHTML).join("")}` : ""}
       <div class="cols">
-        ${(n.uses || []).some(u => G.nodes[u] || G.apps[u] || G.reserved[u]) ? `<div><h3>Builds on</h3><div class="reflist">${n.uses.map(u => ref(u)).join("")}</div></div>` : ""}
-        ${usedBy.length ? `<div><h3>Used in</h3><div class="reflist">${usedBy.map(u => ref(u)).join("")}</div></div>` : ""}
-        ${rel.length ? `<div><h3>Related</h3><div class="reflist">${rel.flatMap(([, g]) => g.items.map(x => ref(x.id))).join("")}</div></div>` : ""}
+        ${refCol("Builds on", (n.uses || []).filter(u => G.nodes[u] || G.apps[u] || G.reserved[u]))}
+        ${refCol("Used in", [...usedBy.filter(u => G.nodes[u].topic === n.topic), ...usedBy.filter(u => G.nodes[u].topic !== n.topic)])}
+        ${refCol("Related", rel.flatMap(([, g]) => g.items.map(x => x.id)))}
       </div>
       ${apps.length ? `<h2>Where it is used in practice</h2><div class="reflist">${apps.map(a => ref(a)).join("")}</div>` : ""}
       <h2>Study it</h2>
@@ -232,6 +239,7 @@ VIEWS.n = {
       toast(g >= 3 ? `Marked as understood. It comes back for review in ${fmtDays(S.P.cards[k].due - Date.now())}.` : "Noted. It will come back in today's review."); };
     $("#aKnow").onclick = () => grade(3); $("#aUnsure").onclick = () => grade(1);
     const q = $("#qThis"); if (q) q.onclick = () => startSession("node", { node: id });
+    $$(".morebtn").forEach(b => b.onclick = () => { const more = b.previousElementSibling as HTMLElement, open = more.hidden; more.hidden = !open; b.setAttribute("aria-expanded", String(open)); b.textContent = open ? "Show less" : b.dataset.more; });
     const ps = $("#pStudy"); if (ps) ps.onclick = () => { S.P.lastPath = id; saveProgress(false); startSession("path", { node: id }); };
   },
 };
