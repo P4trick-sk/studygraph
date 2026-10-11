@@ -23,7 +23,7 @@ studygraph (this repo)                 course repo (one per subject, from `study
 ## Make a new course app
 
 ```bash
-npx --yes github:OWNER/studygraph init my-course --name "Temno" --title "Matematika nekonečna" \
+npx --yes github:P4trick-sk/studygraph init my-course --name "Temno" --title "Matematika nekonečna" \
     --kicker "TEÓRIA MNOŽÍN A LOGIKA" --lang sk --alt en --course "A:Teória množín"
 cd my-course && git init && npm install
 # put materials in sources/, write content/ (by hand or with the studygraph-course-builder skill)
@@ -31,7 +31,6 @@ npx studygraph ingest && npx studygraph validate
 npm run serve                              # http://localhost:8000
 git add . && git commit -m "First topics" && git push   # GitHub Pages workflow publishes it
 ```
-Replace `OWNER` with the GitHub account that hosts this repository (also in the course's `package.json`).
 Existing builds become course repos with `npx studygraph import knowledge.json my-course`.
 
 ## Commands

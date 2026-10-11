@@ -28,7 +28,7 @@ export function init(dir: string, o: InitOptions) {
   const preset = o.preset && PRESETS[o.preset] ? o.preset : "math";
   const lang = o.lang || "en", ui = o.ui || (lang === "sk" ? "sk" : "en");
   const courseId = courseIdOf(o.name);
-  const core = o.core || `github:OWNER/studygraph#semver:^${ENGINE_VERSION.split(".")[0]}.0.0`;
+  const core = o.core || `github:P4trick-sk/studygraph#semver:^${ENGINE_VERSION.split(".")[0]}.0.0`;
   for (const d of ["content/topics", "sources", "docs/outlines", "docs/tasks", ".sg/scratch"]) mkdirSync(join(dir, d), { recursive: true });
   copyTemplate(dir, { NAME: o.name, SLUG: courseId, TITLE: o.title, CORE: core, ENGINE: ENGINE_VERSION });
   writeJson(join(dir, "content", "config.json"), {

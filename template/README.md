@@ -1,6 +1,6 @@
 # {{NAME}}
 
-{{TITLE}} — a [Studygraph](https://github.com/OWNER/studygraph) course. This repository holds only the course
+{{TITLE}} — a [Studygraph](https://github.com/P4trick-sk/studygraph) course. This repository holds only the course
 content (`content/`); the app, the tooling and the schema come from the `studygraph` core pinned in `package.json`.
 
 ## Use

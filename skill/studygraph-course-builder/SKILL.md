@@ -15,9 +15,10 @@ prompt points to it). `K` = this skill's directory.
 ## 0. Get the core
 
 The CLI is `npx studygraph …` inside a course repo (after `npm install`). In a fresh sandbox:
-`npm install -g github:<owner>/studygraph` (ask the user for the repo, or use the core zip they upload: unzip, then
-`npm install && npm install -g .` in it). Check with `studygraph version`. Course repos created here use
-`--core file:<path to core>` so they work offline; tell the user to change the pin to their GitHub repo afterwards.
+`npm install -g github:P4trick-sk/studygraph` (private repo: needs GitHub access; otherwise use the core zip the user
+uploads: unzip, then `npm install && npm install -g .` in it). Check with `studygraph version`. Course repos created here use
+`--core file:<path to core>` so they work offline; tell the user to change the pin in `package.json` to
+`github:P4trick-sk/studygraph#semver:^1.0.0` afterwards (the `init` default without `--core`).
 
 ## 1. Ask (one ask_user_input call, at most 3 questions) after skimming 1–2 source files
 

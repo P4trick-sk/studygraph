@@ -58,7 +58,7 @@ try {
       const dir = dirArg(); if (!str("name") || !str("title")) throw new Error("init needs --name and --title");
       const r = init(dir, { name: str("name")!, title: str("title")!, kicker: str("kicker"), lead: str("lead"), preset: str("preset"), lang: str("lang"), alt: str("alt"), ui: str("ui"),
         courses: (multi.course || []).map(c => { const [id, ...t] = c.split(":"); return { id, title: t.join(":") || id }; }), figures: str("figures")?.split(","), copyright: str("copyright"), core: str("core") });
-      print(`created course ${r.courseId} in ${r.dir}\ncore dependency: ${r.core}${r.core.includes("OWNER") ? "  ← replace OWNER with your GitHub account in package.json" : ""}\nnext: npm install, put materials in sources/, studygraph ingest`);
+      print(`created course ${r.courseId} in ${r.dir}\ncore dependency: ${r.core}\nnext: npm install, put materials in sources/, studygraph ingest`);
       break;
     }
     case "ingest": { const root = dirArg(); for (const r of ingest(root, pos.slice(1).map(p => resolve(p)), { images: !!flag("images") })) print(`${r.file}: ${r.pages} pages, ${r.flagged.length} with garbled maths ${r.flagged.slice(0, 15).join(",")}`); break; }
