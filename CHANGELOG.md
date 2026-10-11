@@ -2,6 +2,13 @@
 
 All releases are git tags `vX.Y.Z`. Course repos pin a semver range and upgrade with `studygraph upgrade`.
 
+## 1.0.2 — 2026-10-11
+
+- `init` pins `github:P4trick-sk/studygraph` instead of the `OWNER` placeholder; the course README template links
+  the core repo. The replace-`OWNER` hint is gone from the CLI and README, and the course-builder skill installs from
+  `github:P4trick-sk/studygraph`.
+- GitHub Pages workflow that builds and deploys the demo course.
+
 ## 1.0.1 — 2026-10-09
 
 - Release used to test `studygraph upgrade` end to end; no schema change.
