@@ -128,6 +128,25 @@ export function readinessLine(id) {
   if (rd.ready) return `<p class="ready"><span class="dot" style="background:var(--ok)"></span><span>You know all ${rd.total} prerequisite${rd.total > 1 ? "s" : ""}.</span></p>`;
   return `<p class="ready"><span class="dot" style="background:var(--accent)"></span><span>You know ${rd.known} of ${rd.total} prerequisites. Review ${rd.missing.slice(0, 3).map(m => `<a class="xl" data-pv="${esc(m)}" href="${itemHref(m)}" style="--tc:${colorOf(m)}">${tt(m)}</a>`).join(", ")}${rd.missing.length > 3 ? ` and ${rd.missing.length - 3} more` : ""} first.</span></p>`;
 }
+const MASTERED = .7, NEXT_UP = 5;
+const ratioBar = (done, total) => `<span class="mbar" title="${done} of ${total} mastered"><i style="width:${total ? Math.round(done / total * 100) : 0}%"></i></span>`;
+// Item page: a fixed-size overview of the learning path; the full list lives on #/path/<id>.
+export function pathSummary(id, path) {
+  const todo = path.map((p, i) => ({ p, pos: i + 1 })).filter(x => mastery(x.p) < MASTERED), done = path.length - todo.length;
+  return `<h2>Learning path</h2><div class="card pathcard">
+    <div class="row pathhead"><span class="small">${path.length} item${path.length > 1 ? "s" : ""} to understand first, in order.</span><span class="small muted">${done} of ${path.length} mastered</span>${ratioBar(done, path.length)}</div>
+    ${todo.length ? `<h3>Next up</h3><ol class="reflist pathlist">${todo.slice(0, NEXT_UP).map(x => `<li value="${x.pos}">${ref(x.p)}</li>`).join("")}</ol>
+      ${todo.length > NEXT_UP ? `<p class="muted small">and ${todo.length - NEXT_UP} more not mastered yet.</p>` : ""}` : `<p class="muted small">You have mastered all of them.</p>`}
+    <div class="row"><button class="iconbtn" id="pStudy">Study this path</button><a class="iconbtn" href="#/path/${encodeURIComponent(id)}">See the full path</a></div></div>`;
+}
+// Path page: the path split into one collapsible group per topic, keeping the global learning order numbers.
+function pathGroups(path) {
+  const G = S.G, groups = new Map();
+  path.forEach((p, i) => { const t = G.nodes[p].topic; if (!groups.has(t)) groups.set(t, []); groups.get(t).push({ p, pos: i + 1 }); });
+  return [...groups.entries()].sort((a, b) => (G.topicById[a[0]]?.order ?? 99) - (G.topicById[b[0]]?.order ?? 99));
+}
+const pathRow = (p, pos, goal = false) => { const m = mastery(p); return `<li><a href="${itemHref(p)}"><span class="mono faint" style="width:2.2em">${pos}</span>${chip(p)}<span class="t">${tt(p)}${goal ? ' <span class="small faint">goal</span>' : ""}</span>${mbar(p)}<span class="small ${m >= MASTERED ? "" : "faint"}" style="width:6em;text-align:right">${m >= MASTERED ? "Mastered" : m > 0 ? "Learning" : "Not started"}</span></a></li>`; };
+
 export function relatedGroups(id) {
   const G = S.G, n = G.nodes[id], groups = new Map();
   const add = (label, strength, target, note) => { if (!G.nodes[target] && !G.reserved[target]) return; if (!groups.has(label)) groups.set(label, { strength, items: [] }); const g = groups.get(label); if (!g.items.some(x => x.id === target)) g.items.push({ id: target, note }); };
@@ -173,7 +192,7 @@ VIEWS.n = {
         <span class="muted small">Mastery <span class="mbar"><i id="mfill" style="width:${m}%"></i></span> <span id="mtext">${m}%</span></span></div>
       <h2>Learn with AI</h2><p class="muted small">The tutor sees this item, its prerequisites and related items, and answers from them. Copy for AI gives you the same material to paste into any chat.</p>
       <div class="row"><button class="iconbtn" id="aTutor">Ask the tutor</button><button class="iconbtn" id="aCopy">Copy for AI</button><a class="iconbtn" href="#/map?node=${encodeURIComponent(id)}&r=1">Open in map</a></div>
-      ${path.length ? `<h2>Learning path</h2><p class="muted small">${path.length} item${path.length > 1 ? "s" : ""} to understand first, in order. <a href="#/path/${encodeURIComponent(id)}">Study this path</a></p><ol class="reflist pathlist">${path.map(p => `<li>${ref(p)}</li>`).join("")}</ol>` : ""}
+      ${path.length ? pathSummary(id, path) : ""}
       ${src ? `<p class="muted small" style="margin-top:28px">Source: ${src}</p>` : ""}
       ${notes.length ? `<details class="notes muted small"><summary>Reliability notes (${notes.length})</summary><ul>${notes.map(x => `<li>${rich(typeof x === "string" ? x : x.text || JSON.stringify(x), { inline: true })}</li>`).join("")}</ul></details>` : ""}
       <div class="pager">${prev ? `<a href="${itemHref(prev)}" data-pv="${esc(prev)}">← ${tt(prev)}</a>` : "<span></span>"}${next ? `<a href="${itemHref(next)}" data-pv="${esc(next)}">${tt(next)} →</a>` : ""}</div>`;
@@ -213,6 +232,7 @@ VIEWS.n = {
       toast(g >= 3 ? `Marked as understood. It comes back for review in ${fmtDays(S.P.cards[k].due - Date.now())}.` : "Noted. It will come back in today's review."); };
     $("#aKnow").onclick = () => grade(3); $("#aUnsure").onclick = () => grade(1);
     const q = $("#qThis"); if (q) q.onclick = () => startSession("node", { node: id });
+    const ps = $("#pStudy"); if (ps) ps.onclick = () => { S.P.lastPath = id; saveProgress(false); startSession("path", { node: id }); };
   },
 };
 export function notFound() { return `<h1>Not found</h1><p class="lead">This link points to an item that is not in the course. <a href="#/">Back to the course</a>.</p>`; }
@@ -241,9 +261,14 @@ VIEWS.path = {
       <h1>Learning path to ${tt(id)}</h1>
       <p class="lead">${path.length ? `Everything ${tt(id)} builds on, in an order where each item only needs the ones above it. ${un ? `${un} of ${path.length} are not mastered yet.` : "You have mastered all of them."}` : "This item has no prerequisites."}</p>
       <div class="row" style="margin:22px 0"><button class="btn primary" id="studyPath" ${path.length ? "" : "disabled"}>Study this path</button><a class="btn" href="#/map?node=${encodeURIComponent(id)}&r=2">See it on the map</a></div>
-      <ol class="ilist" style="padding:0">${[...path, id].map((p, i) => { const m = mastery(p); return `<li><a href="${itemHref(p)}"><span class="mono faint" style="width:2.2em">${i + 1}</span>${chip(p)}<span class="t">${tt(p)}${p === id ? ' <span class="small faint">goal</span>' : ""}</span>${mbar(p)}<span class="small ${m >= .7 ? "" : "faint"}" style="width:6em;text-align:right">${m >= .7 ? "Mastered" : m > 0 ? "Learning" : "Not started"}</span></a></li>`; }).join("")}</ol>`;
+      ${path.length > 1 ? `<div class="row pathtools"><button class="linkbtn" data-pg="open">Expand all</button><button class="linkbtn" data-pg="close">Collapse all</button></div>` : ""}
+      ${pathGroups(path).map(([t, xs]) => { const done = xs.filter(x => mastery(x.p) >= MASTERED).length; return `<details class="pgroup"${done < xs.length ? " open" : ""}><summary><span class="t">${esc(S.G.topicById[t]?.title || t)}</span><span class="mono small muted">${done}/${xs.length}</span>${ratioBar(done, xs.length)}</summary><ol class="ilist">${xs.map(x => pathRow(x.p, x.pos)).join("")}</ol></details>`; }).join("")}
+      <ol class="ilist pathgoal">${pathRow(id, path.length + 1, true)}</ol>`;
   },
-  mount(r) { const b = $("#studyPath"); if (b) b.onclick = () => startSession("path", { node: r.arg }); },
+  mount(r) {
+    const b = $("#studyPath"); if (b) b.onclick = () => startSession("path", { node: r.arg });
+    $$("[data-pg]").forEach(x => x.onclick = () => $$("details.pgroup").forEach(d => (d as HTMLDetailsElement).open = x.dataset.pg === "open"));
+  },
 };
 
 // ---------- search (palette + full page)

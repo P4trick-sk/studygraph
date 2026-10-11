@@ -170,6 +170,20 @@ a.xl:hover { border-bottom-style: solid; }
 .ref.pending { color: var(--faint); cursor: help; }
 .pathlist { list-style: decimal; padding-left: 1.6em; }
 .pathlist li::marker { font: 12px var(--mono); color: var(--muted); }
+.pathcard h3 { margin: 14px 0 4px; color: var(--muted); font-size: .9rem; }
+.pathcard > .row:last-child { margin-top: 12px; }
+.pathhead { gap: 12px; } .pathhead > :first-child { flex: 1; min-width: 0; }
+.pathcard .mbar, .pgroup .mbar { width: 90px; }
+.pathtools { justify-content: flex-end; margin-bottom: 4px; }
+details.pgroup { border: 1px solid var(--line-soft); border-radius: var(--r-m); background: var(--panel); margin-bottom: 10px; }
+details.pgroup > summary { list-style: none; cursor: pointer; display: flex; gap: 12px; align-items: center; padding: 11px 14px; }
+details.pgroup > summary::-webkit-details-marker { display: none; }
+details.pgroup > summary::before { content: "▸"; color: var(--muted); transition: transform .15s; }
+details.pgroup[open] > summary::before { transform: rotate(90deg); }
+details.pgroup > summary .t { flex: 1; min-width: 0; font: 600 1rem var(--sans); }
+details.pgroup[open] > summary { border-bottom: 1px solid var(--line-soft); }
+details.pgroup .ilist { padding: 0 8px; } details.pgroup .ilist li:last-child a { border-bottom: 0; }
+.pathgoal { margin-top: 4px; padding: 0 9px; }
 .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px 28px; margin-top: 30px; }
 .attrib { font-family: var(--sans); }
 .terms { font: 14px var(--sans); color: var(--muted); margin-top: 4px; }
